@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Measuerment</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Measuerment', {
+          name: 'testB_Measuerment',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[0];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var widgetsTab = query(".tab-item-icon.widgets")[0];
+                console.log(widgetsTab);
+                console.log(Date.now());
+                robot.mouseMoveAt(widgetsTab, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                var Set_action_text = query(".action-text")[0];
+                console.log(Set_action_text);
+                console.log(Date.now());
+                robot.mouseMoveAt(Set_action_text, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                //delete Measurement 
+                robot.sequence(function(){
+                  var Measurement = query("[title=Measurement]")[0];
+                  console.log(Measurement);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(Measurement, 100, 1000, Number(37), Number(-50));
+                  // click delete
+                  robot.sequence(function(){
+                    //doh check Measurement-btn delete state 1
+                    var doh_Measurement_btn_delete_state_1 = Measurement.parentNode.id;
+                    console.log("doh_testing: "+doh_Measurement_btn_delete_state_1);
+                    var drop_btn = query(".drop-btn")[0];
+                    console.log(drop_btn);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(drop_btn, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                    //click ok button
+                    robot.sequence(function(){
+                      var ok_btn = query(".jimu-popup-btn")[2];
+                      console.log(ok_btn);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(ok_btn, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                      //add Measurement
+                      robot.sequence(function(){
+                        Measurement = query(".add-widget-node")[0];
+                        console.log(Measurement);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(Measurement, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                        //choose Measurement
+                        robot.sequence(function(){
+                          // search Measurement
+                          var search = query(".jimu-search")[0];
+                          console.log(search);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(search, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                          robot.typeKeys("Measurement",100,200);
+                          // click Measurement
+                          robot.sequence(function(){
+                            Measurement = query("[title=Measurement]")[0];
+                            console.log(Measurement);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(Measurement, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //click ok button
+                            ok_btn = query(".jimu-popup-btn")[2];
+                            console.log(ok_btn);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(ok_btn, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //move mouse to the new Measurement
+                            robot.sequence(function(){
+                              Measurement = query("[title=Measurement]")[0];
+                              console.log(Measurement);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(Measurement, 100, 1000, Number(37), Number(-50));
+                              //doh check Measurement-btn delete state 2
+                              var doh_Measurement_btn_delete_state_2 = Measurement.parentNode.id;
+                              console.log("doh_Measurement_btn_delete_state_2: "+doh_Measurement_btn_delete_state_2);
+                              //doh check icon Src 1
+                              var doh_Measurement_icon_src_1 = Measurement.parentNode.firstChild.firstChild.src;
+                              console.log("doh_Measurement_icon_src_1: "+doh_Measurement_icon_src_1);
+                              //click edit button
+                              robot.sequence(function(){                              
+                                var edit_btn = query(".edit-btn")[0];
+                                console.log(edit_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //edit Measurement
+                                robot.sequence(function(){  
+                                  //change Measurement name
+                                  var action = query(".jimu-input")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  robot.keyPress(keys.TAB,0);
+                                  robot.keyPress(keys.TAB,0,{shift:true});
+                                  robot.typeKeys("testB_Measurement",100,200);
+                                  //change units
+                                  action = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  //choose area unit
+                                  robot.sequence(function(){  
+                                    action = query(".dijitReset.dijitMenuItemLabel")[2];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    action = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[1];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    //choose area unit
+                                    robot.sequence(function(){ 
+                                      action = query(".dijitReset.dijitMenuItemLabel")[10];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      //chang icon
+                                      action = query(".change-icon")[0];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 3000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      ok_btn = query(".jimu-popup-btn")[2];
+                                      console.log(ok_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(ok_btn, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      // iframes跳转至右侧
+                                      var BuilderQuery = query;
+                                      robot.sequence(function(){
+                                        robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                          //doh check icon Src 2
+                                          var doh_Measurement_icon_src_2 = BuilderQuery("[title=testB_Measurement]")[0].parentNode.firstChild.firstChild.src;
+                                          console.log("doh_Measurement_icon_src_2: "+doh_Measurement_icon_src_2);
+                                          // click Layer_List in header 
+                                          var more_btn = query("[title=more]")[0];  
+                                          var flag = undefined != more_btn ; 
+                                          console.log(more_btn);
+                                          console.log(flag);
+                                          console.log(Date.now()); 
+                                          if(flag){
+                                            robot.mouseMoveAt(more_btn, 10, 10);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                          }else{
+                                            var Measurement_btn = query(".icon-node")[0];
+                                            console.log(Measurement_btn);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(Measurement_btn, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                          }
+                                          // if there is a more btn
+                                          robot.sequence(function(){
+                                            if(flag){
+                                              var next_page = query(".points-inner")[0];
+                                              if(next_page != undefined && next_page.hasChildNodes()){
+                                                console.log(next_page);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                              }
+                                              Measurement_btn = query("[title=testB_Measurement]")[0];
+                                              console.log(Measurement_btn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(Measurement_btn, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              robot.mouseMoveAt(Measurement_btn, 100, 3000, Number(150),Number(150));
+                                            }
+                                            //click area
+                                            robot.sequence(function(){
+                                              action = query(".dijitReset.dijitInline.dijitButtonNode")[0];
+                                              console.log(action);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(action, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //click distance
+                                              robot.sequence(function(){
+                                                //doh area unit
+                                                var doh_area_unit = (query(".dijitReset.dijitInline.dijitButtonText")[3].innerText == "Sq Kilometers")||(query(".dijitReset.dijitInline.dijitButtonText")[3].innerText == "平方千米");
+                                                console.log("doh_area_unit: "+doh_area_unit);
+                                                action = query(".dijitReset.dijitInline.dijitButtonNode")[1];
+                                                console.log(action);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(action, 100, 1000);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                //添加断言        
+                                                robot.sequence(def.getTestCallback(function(){
+                                                  //doh distance unit
+                                                  var doh_distance_unit = (query(".dijitReset.dijitInline.dijitButtonText")[3].innerText == "Meters")||(query(".dijitReset.dijitInline.dijitButtonText")[3].innerText == "米");
+                                                  console.log("doh_distance_unit: "+doh_distance_unit);
+                                                  console.log('doh_testing:');
+                                                  doh.t(doh_area_unit,"area unit has been changed!");
+                                                  doh.t(doh_distance_unit,"distance unit has been changed");
+                                                  doh.isNot(doh_Measurement_icon_src_1,doh_Measurement_icon_src_2,"icon has been changed!");
+                                                  doh.isNot(doh_Measurement_btn_delete_state_1,doh_Measurement_btn_delete_state_2,"Measurement widget has been deleted!");    
+
+                                                }), 3000);//添加断言  
+                                              },2000);//click distance
+                                            },2000);//click area
+                                          },2000);// if there is a more btn
+                                        });
+                                      },2000);// iframes跳转至右侧
+                                    },2000);//choose area unit
+                                  },2000);//choose area unit
+                                },2000);//edit Measurement
+                              },2000);//click edit button
+                            },2000);//move mouse to the new Measurement
+                          },2000);// click Measurement
+                        },2000);//choose Measurement
+                      },2000);//add Measurement
+                    },2000);//click ok button
+                  },2000);// click delete
+                },2000);//delete Measurement 
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // iframes跳转至右侧
+    // var BuilderQuery = query;
+    // robot.sequence(function(){
+    //   robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+    //   });
+    // },2000);// iframes跳转至右侧
+  // robot.sequence(function(){
+  // },2000);
+
+  </script>
+</head>
+</html>

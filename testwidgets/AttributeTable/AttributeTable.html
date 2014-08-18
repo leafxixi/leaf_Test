@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot DnD Test</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+
+      
+
+        doh.register('My_AttributeTable_Test', {
+          name: 'AttributeTable_Test',
+          timeout: 60000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // click widgets pane
+            robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){
+              console.log(Date.now());
+              var titleAssert=query(".title")[0];
+              //robot.assertTrue((titleAssert.innerText=="ArcGIS Web AppBuilder"));
+              if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                console.log("name is right");
+              else
+                console.log("name is wrong");
+
+              var widgetsTab = query(".tab-item-icon.widgets")[0];
+                console.log(widgetsTab);
+                console.log(Date.now());
+                robot.mouseMoveAt(widgetsTab, 500, 100);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+
+                // click AttributeTable Icon
+                robot.sequence(function(){
+                  var AttributeTable = query(".box")[1];
+                  console.log(AttributeTable);
+                  console.log(Date.now());
+                  robot.mouseMove(100, 100, 100, 100);
+                  robot.mouseMoveAt(AttributeTable, 500, 200);
+
+                  // click edit button
+                  robot.sequence(function(){
+                    var edit = query('.edit-btn')[0];
+                    console.log(edit);
+                    robot.mouseMoveAt(edit, 200, 100);
+                    robot.mouseClick({left: true}, 100);
+
+                    // setting configuration
+                    robot.sequence(function(){
+                      console.log('Setting Configuration');
+
+                      var widgetSettingNameNode=query(".jimu-input")[0];
+                      robot.mouseMoveAt(widgetSettingNameNode, 50, 100);
+                      robot.mouseClick({left: true}, 50);
+                      robot.keyPress(keys.TAB, 20, {shift: true});
+                      robot.keyPress(keys.TAB,20);
+                      robot.typeKeys("Changed AttributeTable_Name", 250)
+                      var okBtn = query(".jimu-popup-btn")[2];
+                      robot.mouseMoveAt(okBtn, 200, 200);
+                      robot.mouseClick({left: true}, 100);
+
+                      // drag overview mask
+                      builderQuery = query;
+                      robot.sequence(function(){
+                        // debugger;跳跃至右侧frame
+                        robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+
+                          robot.mouseMoveAt(query("div.esriSimpleSliderIncrementButton")[0],100,200);
+                          robot.mouseClick({left: true}, 100);
+                          robot.mouseClick({left: true}, 100);
+                          var overviewBtn = query(".esriOverviewMap")[0];//开小地图按钮
+                          robot.mouseMoveAt(overviewBtn, 100);
+                          robot.mouseClick({left: true}, 100);
+                          var mask = query("div.ovwHighlight")[0];//小地图中 当前视图区域
+                          robot.mouseMoveAt(mask, 200, 200);
+                          robot.mousePress({left: true}, 100);
+                          robot.mouseMoveTo(mask, 200, 200, 20, 20);
+                          robot.mouseRelease({left: true}, 100);
+
+                          overviewBtn = query(".ovwController")[0];//关小地图按钮
+                          robot.mouseMoveAt(overviewBtn, 100);
+                          robot.mouseClick({left: true}, 100);
+
+                          // click homebutton
+                          robot.sequence(function(){
+
+                            var homeBtn = query('div.home')[0];
+                            robot.mouseMoveAt(homeBtn, 100);
+                            robot.mouseClick({left: true}, 200);
+
+                            robot.sequence(def.getTestCallback(function(){
+                              console.log('test');
+                              var tab = builderQuery(".widget-config.view")[0];
+                              var tabDisplay = tab.style.display;
+                              // doh.is('block', tabDisplay, "the .widget-config.view is block");
+                            }), 10000);
+                          }, 100); // click homebutton
+                        });
+                      }, 2000); // drag overview mask
+                    }, 2000); // setting configuration
+                  }, 200); // click edit button
+                }, 3000); // move to overview Icon  */
+            }); // click widgets pane
+           }, 25000);   
+            
+            return def;
+          }
+        });
+      doh.run();
+    });
+  </script>
+</head>
+</html>

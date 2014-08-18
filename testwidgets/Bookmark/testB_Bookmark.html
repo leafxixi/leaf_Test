@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Bookmark</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Bookmark.html', {
+          name: 'testB_Bookmark.html',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){//Setting in Builder
+              // click widgets pane
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){
+                console.log(Date.now());
+                var titleAssert=query(".title")[0];
+                //robot.assertTrue((titleAssert.innerText=="Web AppBuilder for ArcGIS"));
+                if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+
+                var widgetsTab = query(".tab-item-icon.widgets")[0];
+                console.log(widgetsTab);
+                console.log(Date.now());
+                robot.mouseMoveAt(widgetsTab, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                var Set_action_text = query(".action-text")[0];
+                console.log(Set_action_text);
+                console.log(Date.now());
+                robot.mouseMoveAt(Set_action_text, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                //delete Bookmark 
+                robot.sequence(function(){
+                  var bookmark = query("[title=Bookmark]")[0];
+                  console.log(bookmark);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(bookmark, 100, 1000, Number(37), Number(-50));
+                  // click delete
+                  robot.sequence(function(){
+                    //doh check bookmark-btn delete state 1
+                    var doh_bookmark_btn_delete_state_1 = bookmark.parentNode.id;
+                    // console.log("doh_testing: "+doh_bookmark_btn_delete_state_1);
+                    var drop_btn = query(".drop-btn")[0];
+                    console.log(drop_btn);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(drop_btn, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                    //click ok button
+                    robot.sequence(function(){
+                      var ok_btn = query(".jimu-popup-btn")[2];
+                      console.log(ok_btn);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(ok_btn, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                      //add Bookmark
+                      robot.sequence(function(){
+                        bookmark = query(".add-widget-node")[0];
+                        console.log(bookmark);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(bookmark, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                        //choose Bookmark
+                        robot.sequence(function(){
+                          // search Bookmark
+                          var search = query(".jimu-search")[0];
+                          console.log(search);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(search, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                          robot.typeKeys("Bookmark",100,200);
+                          // click Bookmark
+                          robot.sequence(function(){
+                            bookmark = query("[title=Bookmark]")[0];
+                            console.log(bookmark);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(bookmark, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //click ok button
+                            ok_btn = query(".jimu-popup-btn")[2];
+                            console.log(ok_btn);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(ok_btn, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //move mouse to the new Bookmark
+                            robot.sequence(function(){
+                              bookmark = query("[title=Bookmark_2]")[0];
+                              console.log(bookmark);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(bookmark, 100, 1000, Number(37), Number(-50));
+                              //doh check bookmark-btn delete state 2
+                              var doh_bookmark_btn_delete_state_2 = bookmark.parentNode.id;
+                              // console.log("doh_testing: "+doh_bookmark_btn_delete_state_2);
+                              //click edit button
+                              robot.sequence(function(){                              
+                                var edit_btn = query(".edit-btn")[0];
+                                console.log(edit_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //edit Bookmark
+                                robot.sequence(function(){  
+                                  //change Bookmark name
+                                  var action = query(".jimu-input")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  robot.keyPress(keys.TAB,0);
+                                  robot.keyPress(keys.TAB,0,{shift:true});
+                                  robot.typeKeys("testB_Bookmark",100,200);                                  
+                                  // click to add a new bookmark                     
+                                  action = query(".add_mark_text")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);  
+                                  //edit & create a new bookmark
+                                  robot.sequence(function(){
+                                    //change titile
+                                    action = query(".dijitPlaceHolder.dijitInputField")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                                    robot.typeKeys("HAWAII_testB_Bookmark",100,200); 
+                                    //change Thumbnail // needs man action
+                                    action = query(".thumbnail-img")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                                    // drag the bookmark map 
+                                    action = query(".layersDiv")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mousePress({left: true, middle:false, right:false}, 300);
+                                    robot.mouseMoveAt(action, 200, 2000, Number(-260), Number(50));
+                                    robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                                    //zoom to hawaii
+                                    action = query(".esriSimpleSliderIncrementButton")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 500);
+                                    //click ok button
+                                    ok_btn = query(".jimu-popup-btn")[6];
+                                    console.log(ok_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(ok_btn, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    //back to edit bookmark
+                                    robot.sequence(function(){
+                                      // move to Egypt
+                                      action = query(".mark-item-thumbnail")[5];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      //delete Egpyt
+                                      robot.sequence(function(){
+                                        action = query(".mark-item-delete-icon")[5];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        // change widget icon       
+                                        action = query(".change-icon")[1];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //click ok button
+                                        ok_btn = query(".jimu-popup-btn")[2];
+                                        console.log(ok_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(ok_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //跳转到右侧
+                                        var BuilderQuery = query;                                        
+                                        robot.sequence(function(){
+                                          robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                            //doh check bookmark Name
+                                            // var doh_bookmark_Name = BuilderQuery("[title=testB_Bookmark]")[0].innerText;
+                                            var doh_bookmark_Name = bookmark.innerText;
+                                            // console.log("doh_testing: "+doh_bookmark_Name);
+                                            // click bookmark in header 
+                                            var more_btn = query("[title=more]")[0];  
+                                            var flag = undefined != more_btn ; 
+                                            console.log(more_btn);
+                                            console.log(flag);
+                                            console.log(Date.now()); 
+                                            if(flag){
+                                              robot.mouseMoveAt(more_btn, 10, 10);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                            }else{
+                                              var bookmark_btn = query(".icon-node")[0];
+                                              console.log(bookmark_btn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(bookmark_btn, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            }
+                                            // if there is a more btn
+                                            robot.sequence(function(){
+                                              if(flag){
+                                                var next_page = query(".points-inner")[0];
+                                                if(next_page != undefined && next_page.hasChildNodes()){
+                                                  console.log(next_page);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                  robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                                }
+                                                var bookmark_btn = query("[title=testB_Bookmark]")[0];
+                                                console.log(bookmark_btn);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(bookmark_btn, 100, 1000);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              }
+                                              // change bookmark
+                                              robot.sequence(function(){
+                                                // drag map 
+                                                // action = query(".layersDiv")[0];
+                                                // console.log(action);
+                                                // console.log(Date.now());
+                                                // robot.mouseMoveAt(action, 100, 1000);
+                                                // robot.mousePress({left: true, middle:false, right:false}, 300);
+                                                // robot.mouseMoveAt(action, 200, 2000, Number(55), Number(55));
+                                                // robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                                                // type name of new bookmark
+                                                action = query(".jimu-input.input-bookmark-name")[0];
+                                                console.log(action);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(action, 100, 1000);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                robot.typeKeys("This_is_test_in_header",100,200); 
+                                                //click add button
+                                                action = query(".btn-add")[0];
+                                                console.log(action);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(action, 100, 1000);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                //choose a bookmark to zoom to
+                                                robot.sequence(function(){
+                                                  //doh check map selection 1
+                                                  var doh_map_selection_1 = query(".layerTile")[0].id;
+                                                  // console.log("doh_testing: "+doh_map_selection_1);
+                                                  action = query("[title=HAWAII_testB_Bookmark]")[0];
+                                                  console.log(action);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(action, 100, 1000, Number(70), Number(-50));
+                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                  //click delete button
+                                                  action = query(".jimu-btn.btn-delete")[0];
+                                                  console.log(action);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(action, 100, 2000);
+                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                  //添加断言        
+                                                  robot.sequence(def.getTestCallback(function(){
+                                                    //doh check map selection 2
+                                                    var doh_map_selection_2 = query(".layerTile")[0].id;
+                                                    // console.log("doh_testing: "+doh_map_selection_2);
+                                                    console.log('doh_testing:');                          
+                                                    doh.isNot(doh_bookmark_btn_delete_state_1,doh_bookmark_btn_delete_state_2,"Bookmark has been deleted!");
+                                                    doh.isNot("Bookmark",doh_bookmark_Name,"Bookmark_Name has been changed!");
+                                                    doh.isNot(doh_map_selection_1,doh_map_selection_2,"map content has been changed!");
+                                                  }), 3000);//添加断言 
+                                                },2000);//choose a bookmark to zoom to
+                                              },2000);//change bookmark
+                                            },1000); // if there is a more btn
+                                          });
+                                        },2000);//跳转到右侧
+                                      },2000);//delete Egpyt                                      
+                                    },2000);//back to edit bookmark
+                                  },2000);//edit & create a new bookmark
+                                },2000);//edit Bookmark
+                              },2000); //click edit button
+                            },2000);//move mouse to the new Bookmark
+                          },2000);// click Bookmark
+                        },2000);//choose Bookmark
+                      },2000);//add Bookmark
+                    },2000);//click ok button
+                  },2000);// click delete
+                },2000);//delete Bookmark
+              }); // click widgets pane
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  </script>
+</head>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Coordinate</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Coordinate', {
+          name: 'testB_Coordinate',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){//Setting in Builder
+            // click widgets pane
+            robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){
+              console.log(Date.now());
+              var titleAssert=query(".title")[0];
+              //doh.assertTrue((titleAssert.innerText=="Web AppBuilder for ArcGIS"));
+              if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                console.log("name is right");
+              else
+                console.log("name is wrong");
+              //click widgets table
+              var widgetsTab = query(".tab-item-icon.widgets")[0];
+              console.log(widgetsTab);
+              console.log(Date.now());
+              robot.mouseMoveAt(widgetsTab, 100, 1000);
+              robot.mouseClick({left:true, middle:false, right:false}, 100);
+              //move to coordinate
+              robot.sequence(function(){
+                var coordinate_btn = query("[title=Coordinate]")[0];
+                console.log(coordinate_btn);
+                console.log(Date.now());
+                robot.mouseMoveAt(coordinate_btn, 100, 1000, Number(37), Number(-50));
+                //click switch button
+                robot.sequence(function(){
+                  var switch_btn = query(".switch-btn")[0];
+                  console.log(switch_btn);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(switch_btn, 100, 1000);
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  //record visibility doh
+                  robot.sequence(function(){
+                    coordinate_btn = query("[title=Coordinate]")[0];
+                    // console.log("testing: "+coordinate_btn.parentNode.className);//widget-node hide moveable
+                    var doh_visibility = coordinate_btn.parentNode.className;
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    // move back to coordinate
+                    robot.sequence(function(){
+                      coordinate_btn = query("[title=Coordinate]")[0];
+                      console.log(coordinate_btn);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(coordinate_btn, 100, 1000, Number(37), Number(-50));
+                      //click edit button
+                      robot.sequence(function(){
+                        var edit_btn = query(".edit-btn")[0];
+                        console.log(edit_btn);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(edit_btn, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                        //change name of Coordinate
+                        robot.sequence(function(){
+                          var changed_coordinateName = query(".jimu-input")[0];
+                          console.log(changed_coordinateName);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(changed_coordinateName, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          robot.keyPress(keys.TAB,0);
+                          robot.keyPress(keys.TAB,0,{shift:true});
+                          robot.typeKeys("testB_Coordinate_Name",100,200);
+                          //add output coordinate
+                          var action = query(".add-output-coordinate-label")[0];
+                          console.log(action);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(action, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          //In Add Output Coordinate System
+                          robot.sequence(function(){
+                            // Input WKID
+                            action = query(".dijitPlaceHolder.dijitInputField")[0];
+                            console.log(action);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(action, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            robot.typeKeys("4001",100,200);
+                            robot.keyPress(keys.TAB,0);
+                            //click Display Units
+                            robot.sequence(function(){
+                              action = query(".units")[0];
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //choose Display Units
+                              robot.sequence(function(){                              
+                                action = query(".dijitReset.dijitMenuItemLabel")[1];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //Input WKID of the transformation
+                                robot.sequence(function(){   
+                                  action = query(".dijitPlaceHolder.dijitInputField")[1];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  robot.typeKeys("108354",100,200);
+                                  robot.keyPress(keys.TAB,0,{shift:true});
+                                  //click ok button
+                                  var ok_btn = query(".jimu-popup-btn")[6];
+                                  console.log(ok_btn);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(ok_btn, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  //back to edit coordinate
+                                  robot.sequence(function(){
+                                    //add the second output coordinate
+                                    action = query(".add-output-coordinate-label")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    //In Add the second Output Coordinate System
+                                    robot.sequence(function(){
+                                      // Input WKID
+                                      action = query(".dijitPlaceHolder.dijitInputField")[0];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      robot.typeKeys("4002",100,200);
+                                      robot.keyPress(keys.TAB,200);                                
+                                      //click ok button
+                                      ok_btn = query(".jimu-popup-btn")[6];
+                                      console.log(ok_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(ok_btn, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      //back to edit coordinate
+                                      robot.sequence(function(){
+                                        //move up
+                                        var move_btn = query(".action-item.row-up-div")[5];
+                                        console.log(move_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(move_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //move down
+                                        move_btn = query(".action-item.row-down-div")[5];
+                                        console.log(move_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(move_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //delete
+                                        move_btn = query(".action-item.row-delete-div")[5];
+                                        console.log(move_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(move_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //doh check add output coordinate system
+                                        robot.sequence(function(){
+                                          var doh_add_Output = query(".normal-text-div")[6].innerText;
+                                          // console.log("doh testing: "+doh_add_Output);
+                                          //click ok button
+                                          ok_btn = query(".jimu-popup-btn")[2];
+                                          console.log(ok_btn);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(ok_btn, 100, 1000);
+                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                          // iframes跳转至右侧
+                                          var BuilderQuery = query;
+                                          robot.sequence(function(){
+                                            robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                              //doh check coordinate Name
+                                              var doh_coordinateName = BuilderQuery("[title=testB_Coordinate_Name]")[0].innerText;
+                                              // console.log("doh_testing: "+doh_coordinateName);
+                                              //move mouse as the coordinate set
+                                              var map_root = query(".layersDiv")[0];
+                                              console.log(map_root);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(map_root, 100, 1000, Number(200), Number(100));
+                                              robot.mouseMoveAt(map_root, 100, 1000, Number(100), Number(300));
+                                              robot.mouseMoveAt(map_root, 100, 1000, Number(500), Number(100));
+                                              robot.mouseMoveAt(map_root, 100, 1000, Number(700), Number(260));
+                                              //move mouse to choose coordinate
+                                              var coordinate = query(".coordinate-info")[0];
+                                              console.log(coordinate);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(coordinate, 100, 1000); 
+                                              action = query(".dijitReset.dijitMenuItemLabel")[1];
+                                              console.log(action);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(action, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //获取鼠标点击坐标
+                                              robot.sequence(function(){
+                                                robot.mouseMoveAt(map_root, 100, 1000, Number(600), Number(200));
+                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                //添加断言        
+                                                robot.sequence(def.getTestCallback(function(){
+                                                  var doh_pointA = coordinate.innerText;
+                                                  console.log('doh_testing:');                          
+                                                  doh.is("widget-node hide moveable",doh_visibility,"Coordinate visibility has been changed!");
+                                                  doh.isNot("Coordinate",doh_coordinateName,"Coordinate name has been changed!");
+                                                  doh.is("GCS_Airy_1830",doh_add_Output,"GCS_Airy_1830 Coordinate has been added!");
+                                                  doh.isNot("click the map to get coordinates",doh_pointA,"mouse has moved to A !");
+                                                }), 3000);//添加断言   
+                                              },2000);//获取鼠标点击坐标   
+                                            });
+                                          },2000);// iframes跳转至右侧
+                                        },2000);//doh check add output coordinate system
+                                      },2000);//back to edit coordinate
+                                    },2000);//In Add the second Output Coordinate System
+                                  },2000);//back to edit coordinate
+                                },2000);//Input WKID of the transformation
+                              },2000);//choose Display Units
+                            },2000);//click Display Units
+                          },2000);//In Add Output Coordinate System
+                        },2000);//change name of Coordinate
+                      },2000);//click edit button  
+                    },2000);// move back to coordinate
+                  },2000);//record visibility doh
+                },2000);//click switch button
+              },2000);//click switch button
+            }); //move to coordinate
+           }, 5000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  </script>
+</head>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Framework</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/');
+        doh.register('testB_Framework', {
+          name: 'testB_Framework',
+          timeout: 200000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query("title")[0];
+                console.log(titleAssert);
+                console.log(Date.now());
+                if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                //delete the Exist app "Test_Framework_App" 
+                var flag = -1;
+                for(var i = 0 ; i < query(".item-name").length ;i++){
+                  if(query(".item-name")[i].innerText == "Test_Framework_App(changed)"){
+                    flag = i;
+                  }
+                }
+                if(flag != -1){
+                  var action = query(".list-table-item.list-table-item")[flag];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 100, 1000);
+                }
+                //delete button
+                robot.sequence(function(){
+                  if(flag != -1){
+                    action = query(".item-more")[flag];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  }
+                  robot.sequence(function(){
+                    if(flag != -1){
+                      action = query(".item.itme-remove")[flag];
+                      console.log(action);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(action, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    }
+                    robot.sequence(function(){
+                      if(flag != -1){
+                        var ok_btn = query(".jimu-popup-btn")[2];
+                        console.log(ok_btn);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(ok_btn, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                      }
+                      robot.sequence(function(){
+                        var create = query(".create-button")[0];
+                        console.log(create);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(create, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                        //edit new app 
+                        robot.sequence(function(){
+                          //edit app name
+                          action = query(".dijitReset.dijitInputInner")[0];
+                          console.log(action);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(action, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          robot.typeKeys("Test_Framework_App",100,200);
+                          //edit app Description
+                          action = query(".dijitTextBox.dijitTextArea")[0];
+                          console.log(action);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(action, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          robot.typeKeys("There are descriptions of test Framework App description",100,200);
+                          //click ok button
+                          var ok_btn = query(".jimu-popup-btn")[2];
+                          console.log(ok_btn);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(ok_btn, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          //back to wabbuilder
+                          robot.sequence(function(){
+                            robot.mouseMoveAt(titleAssert, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //doh check create info
+                            robot.sequence(function(){
+                              var doh_app_name_create = query(".item-name")[0].innerText == "Test_Framework_App";
+                              console.log("doh_app_name_create:"+doh_app_name_create);
+                              var doh_app_description_create = query(".item-desc")[0].innerText == "There are descriptions of test Framework App description";
+                              console.log("doh_app_description_create:"+doh_app_description_create);
+                              action = query(".list-table-item.list-table-item")[0];
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              //change app info
+                              robot.sequence(function(){
+                                action = query(".item-more")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.sequence(function(){
+                                  action = query(".item.item-editAppInfo")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  robot.sequence(function(){
+                                    //re-edit app name
+                                    action = query(".dijitReset.dijitInputInner")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    robot.keyPress(keys.TAB,0);
+                                    robot.keyPress(keys.TAB,0,{shift:true});
+                                    robot.typeKeys("Test_Framework_App(changed)",100,200);
+                                    //re-edit app Description
+                                    action = query(".dijitTextBox.dijitTextArea")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    robot.keyPress(keys.TAB,0,{shift:true});
+                                    robot.keyPress(keys.TAB,0);
+                                    robot.keyPress(keys.END,0,{shift:true});
+                                    robot.typeKeys("There are descriptions of test Framework App description(changed)",100,200);
+                                    //click ok button
+                                    ok_btn = query(".jimu-popup-btn")[2];
+                                    console.log(ok_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(ok_btn, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    //doh check re-edit info
+                                    robot.sequence(function(){
+                                      var doh_app_name_re_edit = query(".item-name")[0].innerText == "Test_Framework_App(changed)";
+                                      console.log("doh_app_name_re_edit:"+doh_app_name_re_edit);
+                                      var doh_app_description_re_edit = query(".item-desc")[0].innerText == "There are descriptions of test Framework App description(changed)";
+                                      console.log("doh_app_description_re_edit:"+doh_app_description_re_edit);
+                                      action = query(".list-table-item.list-table-item")[0];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      //change app info
+                                      robot.sequence(function(){
+                                        action = query(".item-edit-text")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //get into builder
+                                        robot.sequence(function(){
+                                          //theme
+                                        },2000);//get into builder
+                                      },2000);//change app info
+                                    },2000);//doh check re-edit info
+                                  },2000);
+                                },2000);
+                              },2000);
+                            },2000);//doh check create info
+                          },2000);//back to wabbuilder
+                        },2000);//edit new app 
+                      },2000);
+                    },200);
+                  },200);
+                },200);
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // iframes跳转至右侧
+    // var BuilderQuery = query;
+    // robot.sequence(function(){
+    //   robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+    //   });
+    // },2000);// iframes跳转至右侧
+  // robot.sequence(function(){
+  // },2000);
+  //添加断言        
+  // robot.sequence(def.getTestCallback(function(){
+  //   console.log('doh_testing:');                          
+  //   doh.is("widget-node hide moveable",doh_visibility,"Coordinate visibility has been changed!");
+  // }), 3000);//添加断言  
+  </script>
+</head>
+</html>

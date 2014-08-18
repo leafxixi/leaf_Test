@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testA_Edit</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+        doh.register('testA_Edit', {
+          name: 'testA_Edit',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[1];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="ArcGIS Web Application")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var Edit_btn = query("[title=Edit]")[0];
+                console.log(Edit_btn);
+                console.log(Date.now());
+                robot.mouseMoveAt(Edit_btn, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                robot.mouseMoveAt(Edit_btn, 100, 4000, Number(400),Number(300));
+                //choose an incident to add on map
+                robot.sequence(function(){
+                  var action = query(".itemSymbol")[0];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 100, 1000);
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  //put an incident onto map
+                  action = query(".layersDiv")[0];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 100, 1000, Number(150), Number(150));
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  //doh check
+                  robot.sequence(function(){
+                    var doh_incident_request_type = query(".dijitReset.dijitInputField.dijitInputContainer")[2].lastChild.getAttribute("value") == "Graffiti Complaint – Private Property";
+                    console.log('doh_testing:'+doh_incident_request_type);
+                    var doh_init_svg = query(".layersDiv")[0].lastChild.firstChild.childNodes.length;
+                    console.log('doh_init_svg:'+doh_init_svg);
+                    //undo action
+                    action = query("[aria-labelledby=btnUndo_label]")[0];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    //doh check undo
+                    robot.sequence(function(){
+                      var doh_undo_svg = query(".layersDiv")[0].lastChild.firstChild.childNodes.length;
+                      console.log('doh_undo_svg:'+doh_undo_svg);
+                      //redo action
+                      action = query("[aria-labelledby=btnRedo_label]")[0];
+                      console.log(action);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(action, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                      //doh check redo
+                      robot.sequence(function(){
+                        var doh_redo_svg = query(".layersDiv")[0].lastChild.firstChild.childNodes.length;
+                        console.log('doh_redo_svg:'+doh_redo_svg);
+                        //delete action
+                        action = query(".dijitReset.dijitInline.dijitIcon.toolbarIcon.deleteFeatureIcon")[0];
+                        console.log(action);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(action, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                        //添加断言        
+                        robot.sequence(def.getTestCallback(function(){
+                          var doh_delete_svg = query(".layersDiv")[0].lastChild.firstChild.childNodes.length;
+                          console.log('doh_delete_svg:'+doh_delete_svg);
+                          doh.t(doh_incident_request_type,"add incident successfully:"+doh_incident_request_type);
+                          doh.t(doh_init_svg > doh_undo_svg,"undo action is successfully!");
+                          doh.t(doh_undo_svg < doh_redo_svg,"redo action is successfully!");
+                          doh.t(doh_redo_svg > doh_delete_svg,"delete action is successfully!");
+                        }), 3000);//添加断言
+                      },2000);//doh check redo  
+                    },2000);//doh check undo
+                  },2000);//doh check
+                },4000);//choose an incident to add on map
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // robot.sequence(function(){
+  // },2000);
+  //添加断言        
+  // robot.sequence(def.getTestCallback(function(){
+  //   console.log('doh_testing:');                          
+  //   doh.is("widget-node hide moveable",doh_visibility,"Coordinate visibility has been changed!");
+  // }), 3000);//添加断言  
+  </script>
+</head>
+</html>

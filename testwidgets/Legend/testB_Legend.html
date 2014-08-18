@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Legend</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Legend', {
+          name: 'testB_Legend',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[0];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var widgetsTab = query(".tab-item-icon.widgets")[0];
+                console.log(widgetsTab);
+                console.log(Date.now());
+                robot.mouseMoveAt(widgetsTab, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                var Set_action_text = query(".action-text")[0];
+                console.log(Set_action_text);
+                console.log(Date.now());
+                robot.mouseMoveAt(Set_action_text, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                //delete Legend 
+                robot.sequence(function(){
+                  var Legend = query("[title=Legend]")[0];
+                  console.log(Legend);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(Legend, 100, 1000, Number(37), Number(-50));
+                  // click delete
+                  robot.sequence(function(){
+                    //doh check Legend-btn delete state 1
+                    var doh_Legend_btn_delete_state_1 = Legend.parentNode.id;
+                    console.log("doh_testing: "+doh_Legend_btn_delete_state_1);
+                    var drop_btn = query(".drop-btn")[0];
+                    console.log(drop_btn);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(drop_btn, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                    //click ok button
+                    robot.sequence(function(){
+                      var ok_btn = query(".jimu-popup-btn")[2];
+                      console.log(ok_btn);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(ok_btn, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                      //add Legend
+                      robot.sequence(function(){
+                        Legend = query(".add-widget-node")[0];
+                        console.log(Legend);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(Legend, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                        //choose Legend
+                        robot.sequence(function(){
+                          // search Legend
+                          var search = query(".jimu-search")[0];
+                          console.log(search);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(search, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                          robot.typeKeys("Legend",100,200);
+                          // click Legend
+                          robot.sequence(function(){
+                            Legend = query("[title=Legend]")[0];
+                            console.log(Legend);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(Legend, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //click ok button
+                            ok_btn = query(".jimu-popup-btn")[2];
+                            console.log(ok_btn);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(ok_btn, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            //move mouse to the new Legend
+                            robot.sequence(function(){
+                              Legend = query("[title=Legend]")[0];
+                              console.log(Legend);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(Legend, 100, 1000, Number(37), Number(-50));
+                              //doh check Legend-btn delete state 2
+                              var doh_Legend_btn_delete_state_2 = Legend.parentNode.id;
+                              console.log("doh_Legend_btn_delete_state_2: "+doh_Legend_btn_delete_state_2);
+                              //doh check icon Src 1
+                              var doh_Legend_icon_src_1 = Legend.parentNode.firstChild.firstChild.src;
+                              console.log("doh_Legend_icon_src_1: "+doh_Legend_icon_src_1);
+                              //click edit button
+                              robot.sequence(function(){                              
+                                var edit_btn = query(".edit-btn")[0];
+                                console.log(edit_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //edit Legend
+                                robot.sequence(function(){  
+                                  //change Legend name
+                                  var action = query(".jimu-input")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  robot.keyPress(keys.TAB,0);
+                                  robot.keyPress(keys.TAB,0,{shift:true});
+                                  robot.typeKeys("testB_Legend",100,200);
+                                  action = query(".dijit.dijitReset.dijitInline.dijitLeft.dijitDownArrowButton.dijitSelect.dijitValidationTextBox")[0];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  //click RIGHT 
+                                  robot.sequence(function(){  
+                                    action = query(".dijitReset.dijitMenuItemLabel")[1];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    action = query(".change-icon")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    ok_btn = query(".jimu-popup-btn")[2];
+                                    console.log(ok_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(ok_btn, 100, 3000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    // iframes跳转至右侧
+                                    var BuilderQuery = query;
+                                    robot.sequence(function(){
+                                      robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                        //doh check icon Src 2
+                                        var doh_Legend_icon_src_2 = BuilderQuery("[title=testB_Legend]")[0].parentNode.firstChild.firstChild.src;
+                                        console.log("doh_Legend_icon_src_2: "+doh_Legend_icon_src_2);
+                                        // click Layer_List in header 
+                                        var more_btn = query("[title=more]")[0];  
+                                        var flag = undefined != more_btn ; 
+                                        console.log(more_btn);
+                                        console.log(flag);
+                                        console.log(Date.now()); 
+                                        if(flag){
+                                          robot.mouseMoveAt(more_btn, 10, 10);
+                                          robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                        }else{
+                                          var Legend_btn = query(".icon-node")[0];
+                                          console.log(Legend_btn);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(Legend_btn, 100, 1000);
+                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        }
+                                        // if there is a more btn
+                                        robot.sequence(function(){
+                                          if(flag){
+                                            var next_page = query(".points-inner")[0];
+                                            if(next_page != undefined && next_page.hasChildNodes()){
+                                              console.log(next_page);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                            }
+                                            Legend_btn = query("[title=testB_Legend]")[0];
+                                            console.log(Legend_btn);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(Legend_btn, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            robot.mouseMoveAt(Legend_btn, 100, 3000, Number(150),Number(150));
+                                          }
+                                          //添加断言        
+                                          robot.sequence(def.getTestCallback(function(){
+                                            //doh check lengnd
+                                            var doh_Legend_arrangement = query(".esriLegendService")[0].firstChild.firstChild.firstChild.firstChild.getAttribute("align") == "right";
+                                            console.log("doh_Legend_arrangement: "+doh_Legend_arrangement);
+                                            doh.t(doh_Legend_arrangement,"Legend arrangement turn to right successfully!");   
+                                            doh.isNot(doh_Legend_btn_delete_state_1,doh_Legend_btn_delete_state_2,"Legend widget has been deleted!")
+                                            doh.isNot(doh_Legend_icon_src_1,doh_Legend_icon_src_2,"icon has been chagned!")
+                                          }), 3000);//添加断言 
+                                        },2000);// if there is a more btn
+                                      });
+                                    },2000);// iframes跳转至右侧
+                                  },2000);//click RIGHT 
+                                },2000);//edit Legend
+                              },2000);//click edit button
+                            },2000);//move mouse to the new Legend
+                          },2000);// click Legend
+                        },2000);//choose Legend
+                      },2000);//add Legend
+                    },2000);//click ok button
+                  },2000);// click delete
+                },2000);//delete Legend 
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+
+  // robot.sequence(function(){
+  // },2000);
+ 
+  </script>
+</head>
+</html>
