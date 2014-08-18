@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testA_LayerList</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+        doh.register('testA_LayerList', {
+          name: 'testA_LayerList',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[1];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="ArcGIS Web Application")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var layerList_btn = query("[title=Layer List]")[0];
+                console.log(layerList_btn);
+                console.log(Date.now());
+                robot.mouseMoveAt(layerList_btn, 200, 200);
+                robot.mouseClick({left: true}, 300);
+                robot.mouseMoveAt(layerList_btn, 200, 3000, Number(50), Number(50));
+                //zoom to a layer
+                robot.sequence(function(){
+                  var action = query(".layers-list-popupMenu-div")[6];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 200, 200);
+                  robot.mouseClick({left: true}, 300);
+                  //click zoom to button
+                  robot.sequence(function(){
+                    action = query(".menu-item")[0];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 200, 200);
+                    robot.mouseClick({left: true}, 300);
+                    action = query(".layers-list-popupMenu-div")[6];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 200, 200);
+                    robot.mouseClick({left: true}, 300);
+                    //change opaque
+                    robot.sequence(function(){
+                      action = query(".menu-item")[1];
+                      console.log(action);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(action, 200, 200);
+                      robot.mouseClick({left: true}, 300);
+                      // change Transparent 0->1->0.X;
+                      robot.sequence(function(){
+                        layerList_btn = query(".dijitSliderImageHandle.dijitSliderImageHandleH")[0];
+                        console.log(layerList_btn);
+                        console.log(Date.now());
+                        //doh check Transparent 1
+                        var doh_transparent_1 = layerList_btn.getAttribute("aria-valuenow");
+                        console.log("doh_testing : "+doh_transparent_1);
+                        robot.mouseMoveAt(layerList_btn, 200, 200);
+                        robot.mousePress({left: true, middle:false, right:false}, 300);
+                        robot.mouseMoveAt(query(".dijitSliderButtonInner")[1], 200, 2000);
+                        robot.mouseMoveAt(query(".dijitSliderButtonInner")[1], 200, 2000, Number(-70),Number(4));
+                        robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                        //doh check Transparent 2
+                        robot.sequence(function(){
+                          var doh_transparent_2 = layerList_btn.getAttribute("aria-valuenow");
+                          console.log("doh_testing : "+doh_transparent_2);
+                          //move up
+                          action = query(".menu-item")[2];
+                          console.log(action);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(action, 200, 200);
+                          robot.mouseClick({left: true}, 300);
+                          //doh check move up
+                          robot.sequence(function(){
+                            var doh_move_up = query(".div-content")[1].innerText == "worldRivers - rivers";
+                            console.log("doh_move_up : "+doh_move_up);
+                            action = query(".layers-list-popupMenu-div")[1];
+                            console.log(action);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(action, 200, 200);
+                            robot.mouseClick({left: true}, 300);
+                            //move down
+                            robot.sequence(function(){
+                              action = query(".menu-item")[3];
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 200, 200);
+                              robot.mouseClick({left: true}, 300);
+                              //doh check move down
+                              robot.sequence(function(){
+                                var doh_move_down = query(".div-content")[6].innerText == "worldRivers - rivers";
+                                console.log("doh_move_down : "+doh_move_down);
+                                action = query(".layers-list-popupMenu-div")[6];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 200, 200);
+                                robot.mouseClick({left: true}, 300);
+                                //click open attribute table button
+                                robot.sequence(function(){
+                                  action = query(".menu-item")[4];
+                                  console.log(action);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(action, 200, 200);
+                                  robot.mouseClick({left: true}, 300);
+                                  //添加断言        
+                                  robot.sequence(def.getTestCallback(function(){
+                                    //doh check open attribute table
+                                    var doh_AT_open = query(".jimu-widget-attributetable-bar")[0].className == "jimu-widget-attributetable-bar open";
+                                    console.log("doh_AT_open : "+doh_AT_open);
+                                    console.log('doh_testing:');  
+                                    doh.t(doh_move_up,"move up is:"+doh_move_up);
+                                    doh.t(doh_move_down,"move down is:"+doh_move_down);
+                                    doh.t(doh_AT_open,"Attribute Table is opened!");
+                                    doh.isNot(doh_transparent_1,doh_transparent_2,"The Transparent has been changed!");
+                                  }), 3000);//添加断言
+                                },2000);//click open attribute table button
+                              },2000);//doh check move down
+                            },2000);//move down
+                          },2000);//doh check move up
+                        },2000);//doh check Transparent 2
+                      },2000);// change Transparent 0->1->0.X;
+                    },2000);//change opaque
+                  },2000);//click zoom to button
+                },2000);//zoom to a layer
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // robot.sequence(function(){
+  // },2000);
+  //添加断言        
+  // robot.sequence(def.getTestCallback(function(){
+  //   console.log('doh_testing:');                          
+  //   doh.is("widget-node hide moveable",doh_visibility,"Coordinate visibility has been changed!");
+  // }), 3000);//添加断言  
+  </script>
+</head>
+</html>

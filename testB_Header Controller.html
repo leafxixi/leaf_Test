@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Header Controller</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Header Controller', {
+          name: 'testB_Header Controller',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                // var titleAssert=query(".title");
+                // console.log(titleAssert);
+                // console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                // if(titleAssert.innerText=="ArcGIS Web Application")
+                //   console.log("name is right");
+                // else
+                //   console.log("name is wrong");
+                //click widgets table
+                var widgetsTab = query(".tab-item-icon.widgets")[0];
+                console.log(widgetsTab);
+                console.log(Date.now());
+                robot.mouseMoveAt(widgetsTab, 100, 1000);
+                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                //move to Header Controller
+                robot.sequence(function(){
+                  var Header_Controller_btn = query("[title=Header Controller]")[0];
+                  console.log(Header_Controller_btn);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(Header_Controller_btn, 100, 1000, Number(37), Number(-50));
+                  //click switch button
+                  robot.sequence(function(){
+                    var switch_btn = query(".switch-btn")[0];
+                    console.log(switch_btn);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(switch_btn, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    //record visibility doh
+                    robot.sequence(function(){
+                      Header_Controller_btn = query("[title=Header Controller]")[0];
+                      // console.log("testing: "+Header_Controller_btn.parentNode.className);
+                      //widget-node hide moveable
+                      var doh_visibility = Header_Controller_btn.parentNode.className == "widget-node hide moveable";
+                      console.log("doh_visibility: "+doh_visibility);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                      // move back to Header Controller
+                      robot.sequence(function(){
+                        Header_Controller_btn = query("[title=Header Controller]")[0];
+                        console.log(Header_Controller_btn);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(Header_Controller_btn, 100, 1000, Number(37), Number(-50));
+                        //click edit button
+                        robot.sequence(function(){
+                          var edit_btn = query(".edit-btn")[0];
+                          console.log(edit_btn);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(edit_btn, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          //change name of Header Controller
+                          robot.sequence(function(){
+                            var changed_Header_Controller_Name = query(".jimu-input")[0];
+                            console.log(changed_Header_Controller_Name);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(changed_Header_Controller_Name, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            robot.keyPress(keys.TAB,0,{shift:true});
+                            robot.keyPress(keys.TAB,0);
+                            robot.typeKeys("testB_Header_Controller_Name",100,200);
+                            var ok_btn = query(".jimu-popup-btn")[2];
+                            console.log(ok_btn);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(ok_btn, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            var BuilderQuery = query;
+                            var Header_Controller_btn;    
+                            //跳转到右侧                                 
+                            robot.sequence(function(){
+                              robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                // click Header_Controller in header 
+                                var more_btn = query("[title=more]")[0];  
+                                var flag = undefined != more_btn ; 
+                                console.log(more_btn);
+                                console.log(flag);
+                                console.log(Date.now()); 
+                                if(flag){
+                                  robot.mouseMoveAt(more_btn, 10, 10);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                }else{
+                                  Header_Controller_btn = query(".icon-node")[0];
+                                  console.log(Header_Controller_btn);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(Header_Controller_btn, 100, 1000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                }
+                                // if there is a more btn
+                                robot.sequence(function(){
+                                  if(flag){
+                                    var next_page = query(".points-inner")[0];
+                                    if(next_page != undefined && next_page.hasChildNodes()){
+                                      console.log(next_page);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                    }
+                                    Header_Controller_btn = query("[title=Header Controller Test]")[0];
+                                    console.log(Header_Controller_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(Header_Controller_btn, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    robot.mouseMoveAt(Header_Controller_btn, 100, 3000, Number(-150),Number(150));
+                                  }
+                                  //doh check open all in panel
+                                  robot.sequence(function(){
+                                    var doh_open_all_in_panel = query(".jimu-container")[0].childNodes.length == 3;
+                                    console.log("doh_open_all_in_panel:"+doh_open_all_in_panel);
+                                    //move back to header controller to choose show in drop-down menu
+                                    var action = BuilderQuery("[title=testB_Header_Controller_Name]")[0];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000, Number(37), Number(-50));
+                                    //click edit
+                                    robot.sequence(function(){
+                                      edit_btn = BuilderQuery(".edit-btn")[0];
+                                      console.log(edit_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(edit_btn, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      //choose show in drop-down menu
+                                      robot.sequence(function(){
+                                        action = BuilderQuery(".radio-td.dropDown.simple-table-td")[1].firstChild;
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        ok_btn = BuilderQuery(".jimu-popup-btn")[2];
+                                        console.log(ok_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(ok_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //click more_btn?
+                                        robot.sequence(function(){
+                                          more_btn = query("[title=more]")[0];  
+                                          flag = undefined != more_btn ; 
+                                          console.log(more_btn);
+                                          console.log(flag);
+                                          console.log(Date.now()); 
+                                          if(flag){
+                                            robot.mouseMoveAt(more_btn, 10, 10);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                          }else{
+                                            Header_Controller_btn = query(".icon-node")[0];
+                                            console.log(Header_Controller_btn);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(Header_Controller_btn, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                          }
+                                          // if there is a more btn
+                                          robot.sequence(function(){
+                                            if(flag){
+                                              var next_page = query(".points-inner")[0];
+                                              if(next_page != undefined && next_page.hasChildNodes()){
+                                                console.log(next_page);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                              }
+                                              Header_Controller_btn = query("[title=Header Controller Test]")[0];
+                                              console.log(Header_Controller_btn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(Header_Controller_btn, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            }
+                                            robot.sequence(function(){
+                                              action = query("[title=Header Controller Test]")[2];
+                                              console.log(action);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(action, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //添加断言        
+                                              robot.sequence(def.getTestCallback(function(){
+                                                doh_drop_down_menu = query(".jimu-drop-menu")[0].childNodes.length == 3;
+                                                console.log('doh_drop_down_menu:'+doh_drop_down_menu);  
+                                                doh.t(doh_visibility,"Header Controller visibility is:"+doh_visibility);
+                                                doh.t(doh_drop_down_menu,"Header Controller drop down menu runs successfully!");
+                                                doh.t(doh_open_all_in_panel,"Header Controller open all in panel runs successfully!");     
+                                              }), 3000);//添加断言
+                                          },2000);
+                                          },2000);// if there is a more btn
+                                        },2000);// click more_btn?
+                                      },2000);//choose show in drop-down menu
+                                    },2000);//click edit
+                                  },2000);//doh check open all in panel
+                                },2000);// if there is a more btn
+                              });
+                            },2000);//跳转到右侧 
+                          },2000);//change name of Header Controller
+                        },2000);//click edit button  
+                      },2000);// move back to Header Controller
+                    },2000);//record visibility doh
+                  },2000);//click switch button
+                },2000);//move to Header Controller
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // iframes跳转至右侧
+    // var BuilderQuery = query;
+    // robot.sequence(function(){
+    //   robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+    //   });
+    // },2000);// iframes跳转至右侧
+  // robot.sequence(function(){
+  // },2000);
+  //添加断言        
+  // robot.sequence(def.getTestCallback(function(){
+  //   console.log('doh_testing:');                          
+  //   doh.is("widget-node hide moveable",doh_visibility,"Header Controller visibility has been changed!");
+  // }), 3000);//添加断言  
+  </script>
+</head>
+</html>

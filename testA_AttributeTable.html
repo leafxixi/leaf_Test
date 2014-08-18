@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot Test_AttributeTable</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+        doh.register('testA_AttributeTable', {
+          name: 'testA_AttributeTable',
+          timeout: 1000000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[1];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //robot.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="ArcGIS Web Application")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var bar = query(".jimu-widget-attributetable-bar")[0];
+                console.log(bar);
+                console.log(Date.now());
+                robot.mouseMoveAt(bar, 200, 200);
+                robot.mouseClick({left: true}, 100);
+                // click options button
+                robot.sequence(function(){
+                  var Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                  console.log(Options);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(Options, 200, 200);
+                  robot.mouseClick({left: true}, 500);
+                  // click Selection curent page & clear
+                  robot.sequence(function(){
+                    var Selection = query(".dijitReset.dijitMenuItem")[1];
+                    console.log(Selection);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(Selection, 200, 200);
+                    robot.mouseClick({left: true}, 1000);
+                    var Clear_Selection = query(".dijitReset.dijitInline.dijitButtonText")[2];
+                    console.log(Clear_Selection);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(Clear_Selection, 200, 200);
+                    robot.mouseClick({left: true}, 1000);
+                    // click options button
+                    robot.sequence(function(){
+                      Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                      console.log(Options);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(Options, 200, 200);
+                      robot.mouseClick({left: true}, 500);
+                      // click Selection all page & clear
+                      robot.sequence(function(){
+                        Selection = query(".dijitReset.dijitMenuItem")[2];
+                        console.log(Selection);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(Selection, 200, 200);
+                        robot.mouseClick({left: true}, 1000);
+                        Clear_Selection = query(".dijitReset.dijitInline.dijitButtonText")[2];
+                        console.log(Clear_Selection);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(Clear_Selection, 200, 200);
+                        robot.mouseClick({left: true}, 1000);
+                        //click layerList button([title="LayerList"])
+                        var layerList_btn = query("[title=Layer List]")[0];
+                        console.log(layerList_btn);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(layerList_btn, 200, 200);
+                        robot.mouseClick({left: true}, 300);
+                        // click into Transparent mode //Q?
+                        robot.sequence(function(){
+                          layerList_btn = query(".layers-list-popupMenu-div")[1];
+                          console.log(layerList_btn);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(layerList_btn, 200, 200);
+                          robot.mouseClick({left: true}, 300);
+                          //click popupMenu
+                          robot.sequence(function(){
+                            layerList_btn = query(".menu-item")[1];
+                            console.log(layerList_btn);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(layerList_btn, 200, 200);
+                            robot.mouseClick({left: true}, 300);
+                            // change Transparent 0->1->0;
+                            robot.sequence(function(){
+                              layerList_btn = query(".dijitSliderImageHandle.dijitSliderImageHandleH")[0];
+                              console.log(layerList_btn);
+                              console.log(Date.now());
+                              //doh check Transparent 1
+                              var doh_transparent_1 = layerList_btn.getAttribute("aria-valuenow");
+                              // console.log("doh_testing : "+doh_transparent_1);
+                              robot.mouseMoveAt(layerList_btn, 200, 200);
+                              robot.mousePress({left: true, middle:false, right:false}, 300);
+                              robot.mouseMoveAt(query(".dijitSliderButtonInner")[1], 200, 2000);
+                              robot.mouseMoveAt(query(".dijitSliderButtonInner")[1], 200, 2000, Number(-70),Number(4));
+                              robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                              //doh check Transparent 2
+                              robot.sequence(function(){
+                                var doh_transparent_2 = layerList_btn.getAttribute("aria-valuenow");
+                                // console.log("doh_testing : "+doh_transparent_2);
+                                // close LayerLiset
+                                var close_btn = query(".close-btn.jimu-vcenter")[0];
+                                console.log(close_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(close_btn, 200, 200);
+                                robot.mouseClick({left: true}, 300);
+                                //drag the map
+                                var map_root = query("#map_root")[0];
+                                console.log(map_root);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(map_root, 200, 200);
+                                robot.mousePress({left: true, middle:false, right:false}, 300);
+                                robot.mouseMoveAt(query(".jimu-widget-header-controller.jimu-main-bgcolor.jimu-widget")[0], 200, 2000);
+                                robot.mouseMoveAt(map_root, 200, 2000);
+                                robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                                // click options button
+                                Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                console.log(Options);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(Options, 200, 200);
+                                robot.mouseClick({left: true}, 500);
+                                // click Selection Filter by map extent
+                                robot.sequence(function(){
+                                  Selection = query(".dijitReset.dijitMenuItem.dijitCheckedMenuItem")[0];
+                                  console.log(Selection);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(Selection, 200, 200);
+                                  robot.mouseClick({left: true}, 1000);
+                                  // click options button
+                                  Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                  console.log(Options);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(Options, 200, 200);
+                                  robot.mouseClick({left: true}, 100);
+                                  // click Selection Symbol btn
+                                  robot.sequence(function(){
+                                    var Selection_Symbol_btn = query(".dijitReset.dijitMenuItem")[3];
+                                    console.log(Selection_Symbol_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(Selection_Symbol_btn, 200, 1000);
+                                    robot.mouseClick({left: true}, 100);
+                                    // edit : select symbol & .etc
+                                    robot.sequence(function(){
+                                      var Symbol_item = query(".symbol-div-item")[2];
+                                      console.log(Symbol_item);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(Symbol_item, 200, 200);
+                                      robot.mouseClick({left: true}, 100);   
+                                      // open color panel                               
+                                      var Symbol_color = query(".jimu-color-picker")[3];
+                                      console.log(Symbol_color);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(Symbol_color, 200, 200);
+                                      robot.mouseClick({left: true}, 100);   
+                                      // choose color
+                                      robot.sequence(function(){ 
+                                        var color = query("td[title=杨李色]")[0];
+                                        console.log(color);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(color, 200, 200);
+                                        robot.mouseClick({left: true}, 100);
+                                        // edit alpha
+                                        var Symbol_alpha = query(".dijitReset.dijitInputInner")[5];
+                                        console.log(Symbol_alpha);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(Symbol_alpha, 200, 200);
+                                        robot.mouseClick({left: true}, 100);
+                                        robot.keyPress(keys.BACKSPACE,300);
+                                        robot.typeKeys("0.4",100,500);    
+                                        //  open color panel
+                                        var Symbol_outline_color = query(".jimu-color-picker")[4];
+                                        console.log(Symbol_outline_color);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(Symbol_outline_color, 200, 200);
+                                        robot.mouseClick({left: true}, 100); 
+                                        // choose outline color
+                                        robot.sequence(function(){ 
+                                          color = query("td[title=品蓝]")[1];
+                                          console.log(color);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(color, 200, 200);
+                                          robot.mouseClick({left: true}, 100);
+                                          // edit outline width
+                                          var Symbol_outline_width = query(".dijitReset.dijitInputInner")[6];
+                                          console.log(Symbol_outline_width);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(Symbol_outline_width, 200, 200);
+                                          robot.mouseClick({left: true}, 100);
+                                          robot.keyPress(keys.TAB,10,{shift:true});
+                                          robot.keyPress(keys.TAB,10);
+                                          robot.typeKeys("5",100,200);
+                                          // click ok button
+                                          okBtn = query(".jimu-popup-btn")[2];
+                                          console.log(okBtn);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(okBtn, 200, 200);
+                                          robot.mouseClick({left: true}, 100);
+                                          // check show/hide columes
+                                          Selection = query(".ui-icon.dgrid-hider-toggle")[0];
+                                          console.log(Selection);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(Selection, 200, 200);
+                                          robot.mouseClick({left: true}, 100);
+                                          robot.mouseClick({left: true}, 1000);
+                                          // choose an object to export
+                                          var object_export = query(".dgrid-content.ui-widget-content:first-child")[0];
+                                          console.log(object_export);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(object_export, 200, 200, 450, 50);
+                                          robot.mouseClick({left: true}, 100);
+                                          // click options button
+                                          Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                          console.log(Options);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(Options, 200, 200);
+                                          robot.mouseClick({left: true}, 100);
+                                          // export to csv
+                                          robot.sequence(function(){   
+                                            var export_csv = query(".dijitReset.dijitMenuItem")[7];
+                                            console.log(export_csv);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(export_csv, 200, 200);
+                                            robot.mouseClick({left: true}, 100);
+                                            // click ok button 有问题，若ok，则弹出windows窗口，打断robot，需要人工操作
+                                            robot.sequence(function(){   
+                                              okBtn = query(".jimu-popup-btn")[2];
+                                              console.log(okBtn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(okBtn, 200, 200);
+                                              robot.mouseClick({left: true}, 100);
+                                              // choose rivers panel
+                                              robot.sequence(function(){ 
+                                                var object_rivers = query(".dijitTabInner.dijitTabContent.dijitTab")[4];
+                                                console.log(object_rivers);
+                                                console.log(Date.now());
+                                                robot.mouseMoveAt(object_rivers, 200, 200);
+                                                robot.mouseClick({left: true}, 100);
+                                                // choose a rivers object
+                                                robot.sequence(function(){ 
+                                                  //doh check map selection 1
+                                                  var doh_map_selection_1 = query(".layerTile")[0].id;
+                                                  // console.log("doh_testing: "+doh_map_selection_1);
+                                                  object_rivers = query(".dgrid-content.ui-widget-content")[1];
+                                                  console.log(object_rivers);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(object_rivers, 200, 200, 450, 50);
+                                                  robot.mouseClick({left: true}, 100);
+                                                  // zoom to
+                                                  var zoom_to = query(".dijitReset.dijitInline.dijitButtonText")[1];
+                                                  console.log(zoom_to);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(zoom_to, 200, 200);
+                                                  robot.mouseClick({left: true}, 100);
+                                                  // click options button
+                                                  Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                                  console.log(Options);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(Options, 200, 200);
+                                                  robot.mouseClick({left: true}, 100);
+                                                  // choose current page rivers object
+                                                  robot.sequence(function(){ 
+                                                    //doh check map selection 2
+                                                    var doh_map_selection_2 = query(".layerTile")[0].id;
+                                                    // console.log("doh_testing: "+doh_map_selection_2);
+                                                    Selection = query(".dijitReset.dijitMenuItem")[1];
+                                                    console.log(Selection);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(Selection, 200, 200);
+                                                    robot.mouseClick({left: true}, 1000);
+                                                    // zoom to
+                                                    zoom_to = query(".dijitReset.dijitInline.dijitButtonText")[1];
+                                                    console.log(zoom_to);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(zoom_to, 200, 200);
+                                                    robot.mouseClick({left: true}, 100);
+                                                    // click options button
+                                                    Options = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                                    console.log(Options);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(Options, 200, 200);
+                                                    robot.mouseClick({left: true}, 100);
+                                                    // choose all page rivers object
+                                                    robot.sequence(function(){ 
+                                                      //doh check map selection 3
+                                                      var doh_map_selection_3 = query(".layerTile")[0].id;
+                                                      // console.log("doh_testing: "+doh_map_selection_3);
+                                                      Selection = query(".dijitReset.dijitMenuItem")[2];
+                                                      console.log(Selection);
+                                                      console.log(Date.now());
+                                                      robot.mouseMoveAt(Selection, 200, 200);
+                                                      robot.mouseClick({left: true}, 1000);
+                                                      // zoom to
+                                                      zoom_to = query(".dijitReset.dijitInline.dijitButtonText")[1];
+                                                      console.log(zoom_to);
+                                                      console.log(Date.now());
+                                                      robot.mouseMoveAt(zoom_to, 200, 200);
+                                                      robot.mouseClick({left: true}, 100);
+                                                      // click refresh
+                                                      var refresh_btn = query(".dijitReset.dijitInline.dijitButtonText")[3];
+                                                      console.log(refresh_btn);
+                                                      console.log(Date.now());
+                                                      robot.mouseMoveAt(refresh_btn, 200, 200);
+                                                      robot.mouseClick({left: true}, 1000);
+                                                      //添加断言        
+                                                      robot.sequence(def.getTestCallback(function(){
+                                                        //doh check map selection 4
+                                                        var doh_map_selection_4 = query(".layerTile")[0].id;
+                                                        // console.log("doh_testing: "+doh_map_selection_4);
+                                                        console.log('doh_testing:');                          
+                                                        doh.is(0,doh_transparent_1,"This table is solid. Transparent value is 0!");
+                                                        doh.isNot(0,doh_transparent_2,"Transparent value is "+doh_transparent_2+"!");
+                                                        doh.isNot(doh_map_selection_1,doh_map_selection_2,"map has zoomed to an object!");
+                                                        doh.isNot(doh_map_selection_2,doh_map_selection_3,"map has zoomed to current page objects!");
+                                                        doh.isNot(doh_map_selection_3,doh_map_selection_4,"map has zoomed to all pages objects!");
+                                                      }), 3000);//添加断言 
+                                                    },2000);// choose all page rivers object
+                                                  },2000);// choose current page rivers object
+                                                },2000);// choose a rivers object
+                                              },2000);// choose rivers panel
+                                            },2000);// click ok button
+                                          },2000); //export to csv
+                                        },1000);// choose outline color                                  
+                                      },1000);// choose color
+                                    }, 2000); // edit : select symbol & .etc
+                                  },2000);// click Selection Symbol btn
+                                },2000);// Filter by map extent
+                              },2000);//doh check Transparent 2
+                            },2000);// change Transparent 0->1->0;
+                          },2000);//click popupMenu
+                        },2000);// click into Transparent mode 
+                      },2000);// click Selection all page & clear
+                    },2000);// click options button
+                  },2000);// click Selection curent page & clear
+                },3000);// click options button
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  </script>
+</head>
+</html>

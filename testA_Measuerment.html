@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testA_Measuerment</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+        doh.register('testA_Measuerment', {
+          name: 'testA_Measuerment',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){
+            // start
+              robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){                
+                var titleAssert=query(".title")[1];
+                console.log(titleAssert);
+                console.log(Date.now());
+                //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
+                if(titleAssert.innerText=="ArcGIS Web Application")
+                  console.log("name is right");
+                else
+                  console.log("name is wrong");
+                var Measurement_btn = query("[title=Measurement]")[0];
+                console.log(Measurement_btn);
+                console.log(Date.now());
+                robot.mouseMoveAt(Measurement_btn, 200, 200);
+                robot.mouseClick({left: true}, 300);
+                robot.mouseMoveAt(Measurement_btn, 200, 3000, Number(50), Number(50));
+                robot.sequence(function(){
+                  var action = query(".dijitReset.dijitInline.dijitButtonNode")[0];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 100, 1000);
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  // var doh_measurement_area_0 = query(".dijitContentPane.result.esriMeasurementResultValue")[0].innerText == "";
+                  // console.log("doh_measurement_area_0:"+doh_measurement_area_0);
+                  //click work on map
+                  action = query(".layersDiv")[0];
+                  console.log(action);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(action, 100, 1000, Number(50), Number(50));
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  robot.mouseMoveAt(action, 100, 1000, Number(250), Number(75));
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  robot.mouseMoveAt(action, 100, 1000, Number(125), Number(250));
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                  //doh check area result
+                  robot.sequence(function(){
+                    var doh_measurement_area = query(".dijitContentPane.result.esriMeasurementResultValue")[0].innerText != "";
+                    console.log("doh_measurement_area:"+doh_measurement_area);
+                    action = query(".dijitReset.dijitInline.dijitButtonNode")[1];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    action = query(".layersDiv")[0];
+                    console.log(action);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(action, 100, 1000, Number(50), Number(50));
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    robot.mouseMoveAt(action, 100, 1000, Number(275), Number(250));
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                    //doh check distance result
+                    robot.sequence(function(){
+                      var doh_measurement_distance = query(".dijitContentPane.result.esriMeasurementResultValue")[0].innerText != "";
+                      console.log("doh_measurement_distance:"+doh_measurement_distance);
+                      action = query(".dijitReset.dijitInline.dijitButtonNode")[2];
+                      console.log(action);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(action, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                      action = query(".layersDiv")[0];
+                      console.log(action);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(action, 100, 1000, Number(50), Number(50));
+                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                      //doh check position result
+                      robot.sequence(function(){
+                        var doh_measurement_position_x = query("[dojoattachpoint=markerLongitude]")[0].innerText;
+                        console.log("doh_measurement_position_x:"+doh_measurement_position_x);
+                        var doh_measurement_position_y = query("[dojoattachpoint=markerLatitude]")[0].innerText;
+                        console.log("doh_measurement_position_y:"+doh_measurement_position_y);
+                        robot.mouseMoveAt(action, 100, 1000, Number(150), Number(94));
+                        //添加断言        
+                        robot.sequence(def.getTestCallback(function(){
+                          var doh_measurement_position_x_mouse = query("[dojoattachpoint=mouseLongitude]")[0].innerText;
+                          console.log("doh_measurement_position_x_mouse:"+doh_measurement_position_x_mouse);
+                          var doh_measurement_position_y_mouse = query("[dojoattachpoint=mouseLatitude]")[0].innerText;
+                          console.log("doh_measurement_position_y_mouse:"+doh_measurement_position_y_mouse);
+                          console.log('doh_testing:');
+                          doh.t(doh_measurement_area,"Measurement Area worked!");
+                          doh.t(doh_measurement_distance,"Measurement Distance worked!");
+                          doh.isNot(doh_measurement_position_x,doh_measurement_position_x_mouse,"Measurement Positon X has changed!");
+                          doh.isNot(doh_measurement_position_y,doh_measurement_position_y_mouse,"Measurement Positon Y has changed!");
+                        }), 3000);//添加断言 
+                      },2000);//doh check position result
+                    },2000);//doh check distance result
+                  },2000);//doh check area result
+                },2000);
+              }); // start
+            }, 8000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  // robot.sequence(function(){
+  // },2000);
+ 
+  </script>
+</head>
+</html>

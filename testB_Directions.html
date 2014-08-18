@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>robot testB_Directions</title>
+
+  <style>
+    @import "http://leaf:3344/arcgis_js_api/310/js/dojo/util/doh/robot/robot.css";
+  </style>
+
+  <!-- required: dojo.js -->
+  <script type="text/javascript" src="http://leaf:3344/arcgis_js_api/310/js/dojo/dojo/dojo.js"
+    data-dojo-config="isDebug: true"></script>
+  <script type="text/javascript">
+    require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
+    function(doh, dom, robot, keys){
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+        doh.register('testB_Directions', {
+          name: 'testB_Directions',
+          timeout: 100000,
+          setUp: function(){
+            console.log(robot.doc);
+          },
+
+          runTest: function(){
+            var def = new doh.Deferred();
+            console.log(Date.now());
+            robot.sequence(function(){//Setting in Builder
+            // click widgets pane
+            robot.window.require(["dojo/query", 'dijit/registry'], 
+              function(query, registry){
+              console.log(Date.now());
+              var titleAssert=query(".title")[0];
+              //doh.assertTrue((titleAssert.innerText=="Web AppBuilder for ArcGIS"));
+              if(titleAssert.innerText=="Web AppBuilder for ArcGIS")
+                console.log("name is right");
+              else
+                console.log("name is wrong");
+
+              var widgetsTab = query(".tab-item-icon.widgets")[0];
+              console.log(widgetsTab);
+              console.log(Date.now());
+              robot.mouseMoveAt(widgetsTab, 100, 1000);
+              robot.mouseClick({left:true, middle:false, right:false}, 100);
+              var Set_action_text = query(".action-text")[0];
+              console.log(Set_action_text);
+              console.log(Date.now());
+              robot.mouseMoveAt(Set_action_text, 100, 1000);
+              robot.mouseClick({left:true, middle:false, right:false}, 100);
+              //delete Directions 
+              robot.sequence(function(){
+                var Directions = query("[title=Directions]")[0];
+                console.log(Directions);
+                console.log(Date.now());
+                robot.mouseMoveAt(Directions, 100, 1000, Number(37), Number(-50));
+                // click delete
+                robot.sequence(function(){
+                  //doh check Directions-btn delete state 1
+                  var doh_Directions_btn_delete_state_1 = Directions.parentNode.id;
+                  console.log("doh_testing: "+doh_Directions_btn_delete_state_1);
+                  var drop_btn = query(".drop-btn")[0];
+                  console.log(drop_btn);
+                  console.log(Date.now());
+                  robot.mouseMoveAt(drop_btn, 100, 1000);
+                  robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                  //click ok button
+                  robot.sequence(function(){
+                    var ok_btn = query(".jimu-popup-btn")[2];
+                    console.log(ok_btn);
+                    console.log(Date.now());
+                    robot.mouseMoveAt(ok_btn, 100, 1000);
+                    robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                    //add Directions
+                    robot.sequence(function(){
+                      Directions = query(".add-widget-node")[0];
+                      console.log(Directions);
+                      console.log(Date.now());
+                      robot.mouseMoveAt(Directions, 100, 1000);
+                      robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                      //choose Directions
+                      robot.sequence(function(){
+                        // search Directions
+                        var search = query(".jimu-search")[0];
+                        console.log(search);
+                        console.log(Date.now());
+                        robot.mouseMoveAt(search, 100, 1000);
+                        robot.mouseClick({left:true, middle:false, right:false}, 100); 
+                        robot.typeKeys("Directions",100,200);
+                        // click Directions
+                        robot.sequence(function(){
+                          Directions = query("[title=Directions]")[0];
+                          console.log(Directions);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(Directions, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          //click ok button
+                          ok_btn = query(".jimu-popup-btn")[2];
+                          console.log(ok_btn);
+                          console.log(Date.now());
+                          robot.mouseMoveAt(ok_btn, 100, 1000);
+                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                          //move mouse to the new Directions
+                          robot.sequence(function(){
+                            Directions = query("[title=Directions]")[0];
+                            console.log(Directions);
+                            console.log(Date.now());
+                            robot.mouseMoveAt(Directions, 100, 1000, Number(37), Number(-50));
+                            //doh check Directions-btn delete state 2
+                            var doh_Directions_btn_delete_state_2 = Directions.parentNode.id;
+                            console.log("doh_testing: "+doh_Directions_btn_delete_state_2);
+                            //doh check icon Src 1
+                            var doh_Directions_icon_src_1 = Directions.parentNode.firstChild.firstChild.src;
+                            console.log("doh_testing: "+doh_Directions_icon_src_1);
+                            //click edit button
+                            robot.sequence(function(){                              
+                              var edit_btn = query(".edit-btn")[0];
+                              console.log(edit_btn);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(edit_btn, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //edit Directions
+                              robot.sequence(function(){  
+                                //change Directions name
+                                var action = query(".jimu-input")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("testB_Directions",100,200);
+                                //change 占位符(Search address or place)                                
+                                action = query(".dijit.dijitReset.dijitInline.dijitLeft.dijitTextBox")[5];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("testB_Search_address_or_place",100,200);
+                                //change icon
+                                action = query(".change-icon")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //click ok button
+                                ok_btn = query(".jimu-popup-btn")[2];
+                                console.log(ok_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(ok_btn, 100, 3000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //跳转到右侧
+                                var BuilderQuery = query;                                        
+                                robot.sequence(function(){
+                                  robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                    // click Directions in header 
+                                    var more_btn = query("[title=more]")[0];  
+                                    var flag = undefined != more_btn ; 
+                                    console.log(more_btn);
+                                    console.log(flag);
+                                    console.log(Date.now()); 
+                                    if(flag){
+                                      robot.mouseMoveAt(more_btn, 10, 10);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                    }else{
+                                      var Directions_btn = query(".icon-node")[0];
+                                      console.log(Directions_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(Directions_btn, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    }
+                                    // if there is a more btn
+                                    robot.sequence(function(){
+                                      if(flag){
+                                        var next_page = query(".points-inner")[0];
+                                        console.log(next_page);
+                                        console.log(Date.now());
+                                        if(next_page.hasChildNodes()){
+                                          robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                          robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                        }
+                                        var Directions_btn = query("[title=testB_Directions]")[0];
+                                        console.log(Directions_btn);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(Directions_btn, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        robot.mouseMoveAt(Directions_btn, 100, 5000, Number(-150),Number(150));
+                                      }
+                                      // log in ArcGIS Online
+                                      robot.sequence(function(){                                        
+                                        action = BuilderQuery(".dijit.dijitReset.dijitInline.dijitLeft.esriIdUser.dijitTextBox.dijitValidationTextBox")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        robot.typeKeys("mye_esridevbeijing",100,200);
+                                        action = BuilderQuery(".dijit.dijitReset.dijitInline.dijitLeft.esriIdPwd.dijitTextBox.dijitValidationTextBox")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        robot.typeKeys("yemin19870624",100,200);
+                                        //click ok button 
+                                        action = BuilderQuery(".dijit.dijitReset.dijitInline.dijitButton.esriIdSubmit")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //添加断言        
+                                        robot.sequence(def.getTestCallback(function(){
+                                          var doh_new_directions_service = query("[title=testB_Search_address_or_place]")[0] != undefined;
+                                          console.log('doh_testing new Directions:'+doh_new_directions_service);
+                                          var doh_Directions_icon_src_2 = query("[title=testB_Directions]")[0].parentNode.firstChild.firstChild.src;
+                                          console.log('doh_testing icon src:'+doh_Directions_icon_src_2); 
+                                          //doh check Directions Name
+                                          var doh_Directions_Name = BuilderQuery("[title=testB_Directions]")[0].innerText;
+                                          console.log("doh_testing: "+doh_Directions_Name);
+                                          console.log('doh_testing:');                          
+                                          doh.isNot(doh_Directions_btn_delete_state_2,doh_Directions_btn_delete_state_1,"Directions has been deleted!");
+                                          doh.t(doh_new_directions_service,"New Directions Service has been used!");
+                                          doh.isNot("Directions",doh_Directions_Name,"Directions Name has been changed!");
+                                          doh.isNot(doh_Directions_icon_src_1,doh_Directions_icon_src_2,"Directions Icon has been changed!");
+                                        }), 3000);//添加断言  
+                                      },2000);// log in ArcGIS Online
+                                    },2000);// if there is a more btn
+                                  });
+                                },2000);//跳转到右侧
+                              },3000);//edit Directions
+                            },2000); //click edit button
+                          },2000);//move mouse to the new Directions
+                        },2000);// click Directions
+                      },2000);//choose Directions
+                    },2000);//add Directions
+                  },2000);//click ok button
+                },2000);// click delete
+              },2000);//delete Directions
+            }); // click widgets pane
+           }, 5000);               
+            return def;
+          }
+        });
+      doh.run();
+    });
+  </script>
+</head>
+</html>
