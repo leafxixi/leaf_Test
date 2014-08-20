@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_Edit', {
           name: 'testA_Edit',
           timeout: 100000,
@@ -54,7 +54,7 @@
                   action = query(".layersDiv")[0];
                   console.log(action);
                   console.log(Date.now());
-                  robot.mouseMoveAt(action, 100, 1000, Number(150), Number(150));
+                  robot.mouseMoveAt(action, 100, 1000);
                   robot.mouseClick({left:true, middle:false, right:false}, 100);
                   //doh check
                   robot.sequence(function(){

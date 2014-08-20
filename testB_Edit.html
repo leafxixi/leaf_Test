@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Edit', {
           name: 'testB_Edit',
           timeout: 100000,
@@ -29,7 +29,7 @@
             // start
               robot.window.require(["dojo/query", 'dijit/registry'], 
               function(query, registry){                
-                var titleAssert=query(".title")[1];
+                var titleAssert=query(".title")[0];
                 console.log(titleAssert);
                 console.log(Date.now());
                 //doh.assertTrue((titleAssert.innerText=="ArcGIS Web Application"));
@@ -99,103 +99,122 @@
                             console.log(Date.now());
                             robot.mouseMoveAt(ok_btn, 100, 1000);
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                            //move mouse to the new Edit
-                            robot.sequence(function(){
-                              Edit = query("[title=Edit]")[0];
-                              console.log(Edit);
+                            //doh check icon Src 1
+                            var doh_Edit_icon_src_1 = Edit.parentNode.firstChild.firstChild.src;
+                            console.log("doh_testing: "+doh_Edit_icon_src_1);
+                            //edit Edit
+                            robot.sequence(function(){  
+                              //change Edit name
+                              var action = query(".jimu-input")[0];
+                              console.log(action);
                               console.log(Date.now());
-                              robot.mouseMoveAt(Edit, 100, 1000, Number(37), Number(-50));
-                              //doh check Edit-btn delete state 2
-                              var doh_Edit_btn_delete_state_2 = Edit.parentNode.id;
-                              console.log("doh_testing: "+doh_Edit_btn_delete_state_2);
-                              //doh check icon Src 1
-                              var doh_Edit_icon_src_1 = Edit.parentNode.firstChild.firstChild.src;
-                              console.log("doh_testing: "+doh_Edit_icon_src_1);
-                              //click edit button
-                              robot.sequence(function(){                              
-                                var edit_btn = query(".edit-btn")[0];
-                                console.log(edit_btn);
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.keyPress(keys.TAB,0);
+                              robot.keyPress(keys.TAB,0,{shift:true});
+                              robot.typeKeys("testB_Edit",100,200);
+                              for(var i = 0 ;i < 5; i++){
+                                action = query(".dijitReset.dijitCheckBoxInput")[i];
+                                console.log(action);
                                 console.log(Date.now());
-                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                //edit Edit
-                                robot.sequence(function(){  
-                                  //change Edit name
-                                  var action = query(".jimu-input")[0];
-                                  console.log(action);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.keyPress(keys.TAB,0);
-                                  robot.keyPress(keys.TAB,0,{shift:true});
-                                  robot.typeKeys("testB_Edit",100,200);
-                                  for(var i = 0 ;i < 5; i++){
-                                    action = query(".dijitReset.dijitCheckBoxInput")[i];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                  }
-                                  action = query(".checkbox-td.edit.simple-table-td.editable")[1].firstChild;
-                                  console.log(action);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  action = query(".checkbox-td.disableGeometryUpdate.simple-table-td.update")[1].firstChild;
-                                  console.log(action);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                  action = query(".action-item.row-edit-div")[1];
-                                  console.log(action);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //modify the fields
-                                  robot.sequence(function(){ 
-                                    //set object ID changeable
-                                    action = query("[title=Object ID]")[1].parentNode.parentNode.firstChild.firstChild;
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //move down
-                                    action = query("[title=Object ID]")[1].parentNode.parentNode.lastChild.firstChild.lastChild;
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //move up
-                                    action = query("[title=Status]")[1].parentNode.parentNode.lastChild.firstChild.firstChild;
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //click back button
-                                    action = query(".dijitReset.dijitInline.dijitButtonText")[0];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //change icon
-                                    action = query(".change-icon")[0];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //click ok button
-                                    var ok_btn = query(".jimu-popup-btn")[2];
-                                    console.log(ok_btn);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(ok_btn, 100, 3000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //跳转到右侧
-                                    var BuilderQuery = query;   
-                                    var Edit_btn;                                     
+                                robot.mouseClick({left:true, middle:false, right:false}, 1000);
+                              }
+                              action = query(".checkbox-td.edit.simple-table-td.editable")[1].firstChild;
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              action = query(".checkbox-td.disableGeometryUpdate.simple-table-td.update")[1].firstChild;
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.mouseClick({left:true, middle:false, right:false}, 1000);
+                              action = query(".action-item.row-edit-div")[1];
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //modify the fields
+                              robot.sequence(function(){ 
+                                //set object ID changeable
+                                action = query("[title=Object ID]")[1].parentNode.parentNode.firstChild.firstChild;
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //move down
+                                action = query("[title=Object ID]")[1].parentNode.parentNode.lastChild.firstChild.lastChild;
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //move up
+                                action = query("[title=Status]")[1].parentNode.parentNode.lastChild.firstChild.firstChild;
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //click back button
+                                action = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //change icon
+                                action = query(".change-icon")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //click ok button
+                                var ok_btn = query(".jimu-popup-btn")[2];
+                                console.log(ok_btn);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(ok_btn, 100, 3000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                //跳转到右侧
+                                var BuilderQuery = query;   
+                                var Edit_btn;                                     
+                                robot.sequence(function(){
+                                  robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                    //doh check Edit-btn delete state 2
+                                    var doh_Edit_btn_delete_state_2 = BuilderQuery("[title=testB_Edit]")[0].parentNode.id;
+                                    console.log("doh_testing: "+doh_Edit_btn_delete_state_2);
+                                    // click Edit in header 
+                                    var more_btn = query("[title=more]")[0];  
+                                    var flag = (undefined != more_btn )&&(undefined == query("[title=Layer List]")[0]); 
+                                    console.log(more_btn);
+                                    console.log(flag);
+                                    console.log(Date.now()); 
+                                    if(flag){
+                                      robot.mouseMoveAt(more_btn, 10, 10);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                    }else{
+                                      action = query("[title=Layer List]")[0];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    }
+                                    // if there is a more btn
                                     robot.sequence(function(){
-                                      robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                      if(flag){
+                                        action = query("[title=Layer List]")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        robot.mouseMoveAt(action, 100, 3000, Number(-150),Number(150));
+                                      }
+                                      robot.sequence(function(){
+                                        action = query(".div-select")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
                                         // click Edit in header 
                                         var more_btn = query("[title=more]")[0];  
                                         var flag = undefined != more_btn ; 
@@ -229,20 +248,26 @@
                                             robot.mouseClick({left:true, middle:false, right:false}, 100);
                                             robot.mouseMoveAt(Edit_btn, 100, 3000, Number(-150),Number(150));
                                           }
+                                          // action = query(".esriSimpleSliderIncrementButton")[0];
+                                          // console.log(action);
+                                          // console.log(Date.now());
+                                          // robot.mouseMoveAt(action, 100, 1000);
+                                          // robot.mouseClick({left:true, middle:false, right:false}, 100);
                                           //drag map
-                                          action = query(".layersDiv")[0];
-                                          console.log(action);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000, Number(250), Number(300));
-                                          robot.mousePress({left: true, middle:false, right:false}, 300);
-                                          robot.mouseMoveAt(action, 200, 2000, Number(100), Number(220));
-                                          robot.mouseRelease({left: true, middle:false, right:false}, 300);
+                                          // action = query(".layersDiv")[0];
+                                          // console.log(action);
+                                          // console.log(Date.now());
+                                          // robot.mouseMoveAt(action, 100, 1000, Number(250), Number(300));
+                                          // robot.mousePress({left: true, middle:false, right:false}, 300);
+                                          // robot.mouseMoveAt(action, 200, 2000, Number(100), Number(220));
+                                          // robot.mouseRelease({left: true, middle:false, right:false}, 300);
                                           //selection
                                           robot.sequence(function(){
                                             //doh check icon src 2
                                             var doh_Edit_icon_src_2 = Edit_btn.firstChild.src;
                                             console.log('doh_testing icon src:'+doh_Edit_icon_src_2);
                                             action = query(".layersDiv")[0].lastChild.firstChild.lastChild;
+                                            // action = query(".layersDiv")[0].lastChild.firstChild.childNodes[1];
                                             console.log(action);
                                             console.log(Date.now());
                                             robot.mouseMoveAt(action, 100, 1000);
@@ -292,12 +317,12 @@
                                             }), 3000);//添加断言  
                                           },2000);//selection
                                         },2000);// if there is a more btn
-                                      });
-                                    },2000);//跳转到右侧
-                                  },2000);//modify the fields
-                                },2000);//edit Edit
-                              },2000);//click edit button
-                            },2000);//move mouse to the new Edit
+                                      },2000);
+                                    },2000);
+                                  });
+                                },2000);//跳转到右侧
+                              },2000);//modify the fields
+                            },2000);//edit Edit
                           },2000);// click Edit
                         },2000);//choose Edit
                       },2000);//add Edit
@@ -305,7 +330,7 @@
                   },2000);// click delete
                 },2000);//delete Edit 
               }); // start
-            }, 8000);               
+            },10000);               
             return def;
           }
         });

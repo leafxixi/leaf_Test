@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Header Controller', {
           name: 'testB_Header Controller',
           timeout: 100000,
@@ -61,7 +61,7 @@
                       Header_Controller_btn = query("[title=Header Controller]")[0];
                       // console.log("testing: "+Header_Controller_btn.parentNode.className);
                       //widget-node hide moveable
-                      var doh_visibility = Header_Controller_btn.parentNode.className == "widget-node hide moveable";
+                      var doh_visibility = Header_Controller_btn.parentNode.className == "widget-node moveable hide";
                       console.log("doh_visibility: "+doh_visibility);
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
                       // move back to Header Controller

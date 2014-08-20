@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_Query', {
           name: 'testA_Query',
           timeout: 100000,
@@ -122,7 +122,7 @@
                           robot.sequence(function(){
                             var doh_after_setting_result = query("[data-dojo-attach-point=numSpan]")[0].innerText;
                             console.log("doh_after_setting_result:"+doh_after_setting_result);
-                            var doh_after_clear_result_init = query(".layersDiv")[0].lastChild.childNodes[8].childNodes.length;
+                            var doh_after_clear_result_init = query(".layersDiv")[0].lastChild.childNodes[3].childNodes.length;
                             console.log(doh_after_clear_result_init);
                             console.log("doh_after_clear_result_init:"+doh_after_clear_result_init);
                             //click clear button
@@ -133,7 +133,7 @@
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
                             //添加断言        
                             robot.sequence(def.getTestCallback(function(){
-                              var doh_after_clear_result = query(".layersDiv")[0].lastChild.childNodes[8].childNodes.length;
+                              var doh_after_clear_result = query(".layersDiv")[0].lastChild.childNodes[3].childNodes.length;
                               console.log(doh_after_clear_result);
                               console.log("doh_after_clear_result:"+doh_after_clear_result);
                               doh.isNot(doh_default_result,doh_after_setting_result,"filter tab worked!");

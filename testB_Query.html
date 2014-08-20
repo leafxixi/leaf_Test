@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Query', {
           name: 'testB_Query',
           timeout: 180000,
@@ -99,244 +99,229 @@
                             console.log(Date.now());
                             robot.mouseMoveAt(ok_btn, 100, 1000);
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                            //move mouse to the new Query
-                            robot.sequence(function(){
-                              Query = query("[title=Query]")[0];
-                              console.log(Query);
+                            //doh check icon Src 1
+                            var doh_Query_icon_src_1 = Query.parentNode.firstChild.firstChild.src;
+                            console.log("doh_Query_icon_src_1: "+doh_Query_icon_src_1);
+                            //edit Query
+                            robot.sequence(function(){ 
+                              //change Query name
+                              var action = query(".jimu-input")[0];
+                              console.log(action);
                               console.log(Date.now());
-                              robot.mouseMoveAt(Query, 100, 1000, Number(37), Number(-50));
-                              //doh check Query-btn delete state 2
-                              var doh_Query_btn_delete_state_2 = Query.parentNode.id;
-                              console.log("doh_Query_btn_delete_state_2: "+doh_Query_btn_delete_state_2);
-                              //doh check icon Src 1
-                              var doh_Query_icon_src_1 = Query.parentNode.firstChild.firstChild.src;
-                              console.log("doh_Query_icon_src_1: "+doh_Query_icon_src_1);
-                              //click edit button
-                              robot.sequence(function(){                              
-                                var edit_btn = query(".edit-btn")[0];
-                                console.log(edit_btn);
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.keyPress(keys.TAB,0);
+                              robot.keyPress(keys.TAB,0,{shift:true});
+                              robot.typeKeys("testB_Query",100,200);
+                              //click add task
+                              action = query(".add-label")[0];
+                              console.log(action);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //task click add service URL
+                              robot.sequence(function(){ 
+                                action = query("[data-dojo-attach-point=urlRadio]")[0];
+                                console.log(action);
                                 console.log(Date.now());
-                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                //edit Query
-                                robot.sequence(function(){ 
-                                  //change Query name
-                                  var action = query(".jimu-input")[0];
+                                //input service URL
+                                robot.sequence(function(){
+                                  action = query(".dijitReset.dijitInputInner")[0];
                                   console.log(action);
                                   console.log(Date.now());
                                   robot.mouseMoveAt(action, 100, 1000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.keyPress(keys.TAB,0);
-                                  robot.keyPress(keys.TAB,0,{shift:true});
-                                  robot.typeKeys("testB_Query",100,200);
-                                  //click add task
-                                  action = query(".add-label")[0];
+                                  robot.typeKeys("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5",100,200);
+                                  action = query("[data-dojo-attach-point=btnValidate]")[0];
                                   console.log(action);
                                   console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
+                                  robot.mouseMoveAt(action, 100, 4000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //task click add service URL
-                                  robot.sequence(function(){ 
-                                    action = query("[data-dojo-attach-point=urlRadio]")[0];
+                                  //click ok button
+                                  ok_btn = query(".jimu-btn.ok")[2];
+                                  console.log(ok_btn);
+                                  console.log(Date.now());
+                                  robot.mouseMoveAt(ok_btn, 100, 4000);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  //change task name
+                                  robot.sequence(function(){
+                                    action = query(".dijitReset.dijitInputInner")[1];
                                     console.log(action);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(action, 100, 1000);
                                     robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //input service URL
+                                    robot.keyPress(keys.TAB,0,{shift:true});
+                                    robot.keyPress(keys.TAB,0);
+                                    robot.typeKeys("TaskName:states",100,200);
+                                    //click add other Expressions
+                                    action = query(".add-label")[1];
+                                    console.log(action);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(action, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                    //edit Expressions
                                     robot.sequence(function(){
-                                      action = query(".dijitReset.dijitInputInner")[0];
+                                      action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[0];
                                       console.log(action);
                                       console.log(Date.now());
                                       robot.mouseMoveAt(action, 100, 1000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      robot.typeKeys("http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5",100,200);
-                                      action = query("[data-dojo-attach-point=btnValidate]")[0];
-                                      console.log(action);
-                                      console.log(Date.now());
-                                      robot.mouseMoveAt(action, 100, 4000);
-                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //click ok button
-                                      ok_btn = query(".jimu-btn.ok")[2];
-                                      console.log(ok_btn);
-                                      console.log(Date.now());
-                                      robot.mouseMoveAt(ok_btn, 100, 4000);
-                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //change task name
+                                      //choose a expressions
                                       robot.sequence(function(){
-                                        action = query(".dijitReset.dijitInputInner")[1];
+                                        action = query(".dijitReset.dijitMenuItem")[2];
                                         console.log(action);
                                         console.log(Date.now());
                                         robot.mouseMoveAt(action, 100, 1000);
                                         robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                        robot.keyPress(keys.TAB,0,{shift:true});
-                                        robot.keyPress(keys.TAB,0);
-                                        robot.typeKeys("TaskName:states",100,200);
-                                        //click add other Expressions
-                                        action = query(".add-label")[1];
+                                        action = query(".dijitReset.dijitInputInner")[3];
                                         console.log(action);
                                         console.log(Date.now());
                                         robot.mouseMoveAt(action, 100, 1000);
                                         robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                        //edit Expressions
+                                        robot.typeKeys("Pacific",100,200);
+                                        //click need value
+                                        action = query(".askvalues-checkbox")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        //edit need value panel
                                         robot.sequence(function(){
-                                          action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[0];
+                                          action = query(".dijitReset.dijitInputInner")[15];
                                           console.log(action);
                                           console.log(Date.now());
                                           robot.mouseMoveAt(action, 100, 1000);
                                           robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //choose a expressions
+                                          robot.typeKeys("Pacific",100,200);
+                                          //click result setting
+                                          action = query(".tab-item-td")[1];
+                                          console.log(action);
+                                          console.log(Date.now());
+                                          robot.mouseMoveAt(action, 100, 1000);
+                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                          //edit result setting
                                           robot.sequence(function(){
-                                            action = query(".dijitReset.dijitMenuItem")[2];
+                                            //chang title 
+                                            action = query(".dijitReset.dijitInputInner")[16];
                                             console.log(action);
                                             console.log(Date.now());
                                             robot.mouseMoveAt(action, 100, 1000);
                                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                            action = query(".dijitReset.dijitInputInner")[3];
+                                            robot.typeKeys("(This is DIY Task Name)",100,200);
+                                            //click objectID visibility
+                                            action = query(".checkbox-td.visibility.simple-table-td")[49].firstChild;
+                                            console.log("objectID check box :"+action);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(action, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            //change icon
+                                            action = query(".change-icon")[0];
                                             console.log(action);
                                             console.log(Date.now());
                                             robot.mouseMoveAt(action, 100, 1000);
                                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                            robot.typeKeys("Pacific",100,200);
-                                            //click need value
-                                            action = query(".askvalues-checkbox")[0];
-                                            console.log(action);
+                                            //click ok button
+                                            ok_btn = query(".jimu-popup-btn")[2];
+                                            console.log(ok_btn);
                                             console.log(Date.now());
-                                            robot.mouseMoveAt(action, 100, 1000);
+                                            robot.mouseMoveAt(ok_btn, 100, 4000);
                                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                            //edit need value panel
+                                            // iframes跳转至右侧
+                                            var BuilderQuery = query;
                                             robot.sequence(function(){
-                                              action = query(".dijitReset.dijitInputInner")[15];
-                                              console.log(action);
-                                              console.log(Date.now());
-                                              robot.mouseMoveAt(action, 100, 1000);
-                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                              robot.typeKeys("Pacific",100,200);
-                                              //click result setting
-                                              action = query(".tab-item-td")[1];
-                                              console.log(action);
-                                              console.log(Date.now());
-                                              robot.mouseMoveAt(action, 100, 1000);
-                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                              //edit result setting
-                                              robot.sequence(function(){
-                                                //chang title 
-                                                action = query(".dijitReset.dijitInputInner")[16];
-                                                console.log(action);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(action, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                robot.typeKeys("(This is DIY Task Name)",100,200);
-                                                //click objectID visibility
-                                                action = query(".checkbox-td.visibility.simple-table-td")[49].firstChild;
-                                                console.log("objectID check box :"+action);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(action, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                //change icon
-                                                action = query(".change-icon")[0];
-                                                console.log(action);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(action, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                //click ok button
-                                                ok_btn = query(".jimu-popup-btn")[2];
-                                                console.log(ok_btn);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(ok_btn, 100, 4000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                // iframes跳转至右侧
-                                                var BuilderQuery = query;
+                                              robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                                //doh check Query-btn delete state 2
+                                                var doh_Query_btn_delete_state_2 = BuilderQuery("[title=testB_Query]")[0].parentNode.id;
+                                                console.log("doh_Query_btn_delete_state_2: "+doh_Query_btn_delete_state_2);
+                                                //doh check icon Src 2
+                                                var doh_Query_icon_src_2 = BuilderQuery("[title=testB_Query]")[0].parentNode.firstChild.firstChild.src;
+                                                console.log("doh_Query_icon_src_2: "+doh_Query_icon_src_2);
+                                                // click Layer_List in header 
+                                                var more_btn = query("[title=more]")[0];  
+                                                var flag = undefined != more_btn ; 
+                                                console.log(more_btn);
+                                                console.log(flag);
+                                                console.log(Date.now()); 
+                                                if(flag){
+                                                  robot.mouseMoveAt(more_btn, 10, 10);
+                                                  robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                                }else{
+                                                  var Query_btn = query(".icon-node")[0];
+                                                  console.log(Query_btn);
+                                                  console.log(Date.now());
+                                                  robot.mouseMoveAt(Query_btn, 100, 1000);
+                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                }
+                                                // if there is a more btn
                                                 robot.sequence(function(){
-                                                  robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
-                                                    //doh check icon Src 2
-                                                    var doh_Query_icon_src_2 = BuilderQuery("[title=testB_Query]")[0].parentNode.firstChild.firstChild.src;
-                                                    console.log("doh_Query_icon_src_2: "+doh_Query_icon_src_2);
-                                                    // click Layer_List in header 
-                                                    var more_btn = query("[title=more]")[0];  
-                                                    var flag = undefined != more_btn ; 
-                                                    console.log(more_btn);
-                                                    console.log(flag);
-                                                    console.log(Date.now()); 
-                                                    if(flag){
-                                                      robot.mouseMoveAt(more_btn, 10, 10);
-                                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                                    }else{
-                                                      var Query_btn = query(".icon-node")[0];
-                                                      console.log(Query_btn);
+                                                  if(flag){
+                                                    var next_page = query(".points-inner")[0];
+                                                    if(next_page != undefined && next_page.hasChildNodes()){
+                                                      console.log(next_page);
                                                       console.log(Date.now());
-                                                      robot.mouseMoveAt(Query_btn, 100, 1000);
-                                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                      robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
                                                     }
-                                                    // if there is a more btn
+                                                    Query_btn = query("[title=testB_Query]")[0];
+                                                    console.log(Query_btn);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(Query_btn, 100, 1000);
+                                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                    robot.mouseMoveAt(Query_btn, 100, 3000, Number(150),Number(150));
+                                                  }
+                                                  //click query 
+                                                  robot.sequence(function(){
+                                                    //doh check add task
+                                                    var doh_add_Task = query("[data-dojo-attach-point=queriesTbody]")[0].hasChildNodes();
+                                                    console.log("doh_add_Task:"+doh_add_Task);
+                                                    //doh check add task name
+                                                    var doh_add_Task_name = query(".query-name-div")[0].innerText == "TaskName:states";
+                                                    console.log("doh_add_Task_name:"+doh_add_Task_name);
+                                                    action = query(".query-name-div")[0];
+                                                    console.log(action);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(action, 100, 1000);
+                                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                    robot.mouseMoveAt(action, 100, 3000, Number(50),Number(50));
+                                                    //doh check expressions 
                                                     robot.sequence(function(){
-                                                      if(flag){
-                                                        var next_page = query(".points-inner")[0];
-                                                        if(next_page != undefined && next_page.hasChildNodes()){
-                                                          console.log(next_page);
-                                                          console.log(Date.now());
-                                                          robot.mouseMoveAt(next_page.lastChild, 10, 10);
-                                                          robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                                        }
-                                                        Query_btn = query("[title=testB_Query]")[0];
-                                                        console.log(Query_btn);
-                                                        console.log(Date.now());
-                                                        robot.mouseMoveAt(Query_btn, 100, 1000);
-                                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                        robot.mouseMoveAt(Query_btn, 100, 3000, Number(150),Number(150));
-                                                      }
-                                                      //click query 
-                                                      robot.sequence(function(){
-                                                        //doh check add task
-                                                        var doh_add_Task = query("[data-dojo-attach-point=queriesTbody]")[0].hasChildNodes();
-                                                        console.log("doh_add_Task:"+doh_add_Task);
-                                                        //doh check add task name
-                                                        var doh_add_Task_name = query(".query-name-div")[0].innerText == "TaskName:states";
-                                                        console.log("doh_add_Task_name:"+doh_add_Task_name);
-                                                        action = query(".query-name-div")[0];
-                                                        console.log(action);
-                                                        console.log(Date.now());
-                                                        robot.mouseMoveAt(action, 100, 1000);
-                                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                        robot.mouseMoveAt(action, 100, 3000, Number(50),Number(50));
-                                                        //doh check expressions 
-                                                        robot.sequence(function(){
-                                                          var doh_expression_reminder = query(".hint")[0].innerText == "Pacific";
-                                                          console.log("doh_expression_reminder:"+doh_expression_reminder);
-                                                          action = query(".apply")[0];
-                                                          console.log(action);
-                                                          console.log(Date.now());
-                                                          robot.mouseMoveAt(action, 100, 1000);
-                                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                          robot.mouseMoveAt(action, 100, 8000, Number(50),Number(50));
-                                                          //添加断言        
-                                                          robot.sequence(def.getTestCallback(function(){
-                                                            var doh_Query_Task_Result_name = query(".title")[2].innerText.slice(-23) == "(This is DIY Task Name)";
-                                                            console.log('doh_Query_Task_Result_name:'+doh_Query_Task_Result_name);   
-                                                            var doh_object_ID_visibility = query(".attr-name")[0].innerText =="ObjectID:";
-                                                            console.log('doh_object_ID_visibility:'+doh_object_ID_visibility);
-                                                            doh.t(doh_expression_reminder,"Expressions Reminder is :"+doh_expression_reminder);
-                                                            doh.t(doh_add_Task,"Add Task is :"+doh_add_Task);
-                                                            doh.t(doh_add_Task_name,"Added Task Name changed!");
-                                                            doh.t(doh_Query_Task_Result_name,"Query task result name has been changed!");
-                                                            doh.t(doh_object_ID_visibility,"Visibility of ObjectID is:"+doh_object_ID_visibility);
-                                                            doh.isNot(doh_Query_icon_src_1,doh_Query_icon_src_2,"Query icon has been changed!");
-                                                            doh.isNot(doh_Query_btn_delete_state_1,doh_Query_btn_delete_state_2,"Query widget has been deleted!");
-                                                          }), 3000);//添加断言 
-                                                        },2000);//doh check expressions
-                                                      },2000);//click query
-                                                    },2000);// if there is a more btn
-                                                  });
-                                                },2000);// iframes跳转至右侧
-                                              },2000);//edit result setting
-                                            },2000);//edit need value panel
-                                          },2000);//choose a expressions
-                                        },2000);//edit Expressions
-                                      },2000);//change task name
-                                    },2000);//input service URL
-                                  },2000);//task click add service URL
-                                },2000);//edit Query
-                              },2000);//click edit button
-                            },2000);//move mouse to the new Query
+                                                      var doh_expression_reminder = query(".hint")[0].innerText == "Pacific";
+                                                      console.log("doh_expression_reminder:"+doh_expression_reminder);
+                                                      action = query(".apply")[0];
+                                                      console.log(action);
+                                                      console.log(Date.now());
+                                                      robot.mouseMoveAt(action, 100, 1000);
+                                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                      robot.mouseMoveAt(action, 100, 8000, Number(50),Number(50));
+                                                      //添加断言        
+                                                      robot.sequence(def.getTestCallback(function(){
+                                                        var doh_Query_Task_Result_name = query(".title")[2].innerText.slice(-23) == "(This is DIY Task Name)";
+                                                        console.log('doh_Query_Task_Result_name:'+doh_Query_Task_Result_name);   
+                                                        var doh_object_ID_visibility = query(".attr-name")[0].innerText =="ObjectID:";
+                                                        console.log('doh_object_ID_visibility:'+doh_object_ID_visibility);
+                                                        doh.t(doh_expression_reminder,"Expressions Reminder is :"+doh_expression_reminder);
+                                                        doh.t(doh_add_Task,"Add Task is :"+doh_add_Task);
+                                                        doh.t(doh_add_Task_name,"Added Task Name changed!");
+                                                        doh.t(doh_Query_Task_Result_name,"Query task result name has been changed!");
+                                                        doh.t(doh_object_ID_visibility,"Visibility of ObjectID is:"+doh_object_ID_visibility);
+                                                        doh.isNot(doh_Query_icon_src_1,doh_Query_icon_src_2,"Query icon has been changed!");
+                                                        doh.isNot(doh_Query_btn_delete_state_1,doh_Query_btn_delete_state_2,"Query widget has been deleted!");
+                                                      }), 3000);//添加断言 
+                                                    },2000);//doh check expressions
+                                                  },2000);//click query
+                                                },2000);// if there is a more btn
+                                              });
+                                            },2000);// iframes跳转至右侧
+                                          },2000);//edit result setting
+                                        },2000);//edit need value panel
+                                      },2000);//choose a expressions
+                                    },2000);//edit Expressions
+                                  },2000);//change task name
+                                },2000);//input service URL
+                              },2000);//task click add service URL
+                            },2000);//edit Query
                           },2000);// click Query
                         },2000);//choose Query
                       },2000);//add Query

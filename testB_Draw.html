@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Draw', {
           name: 'testB_Draw',
           timeout: 100000,
@@ -99,158 +99,144 @@
                             console.log(Date.now());
                             robot.mouseMoveAt(ok_btn, 100, 1000);
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                            //move mouse to the new Draw
-                            robot.sequence(function(){
-                              Draw = query("[title=Draw]")[0];
-                              console.log(Draw);
+                            //doh check icon Src 1
+                            var doh_Draw_icon_src_1 = Draw.parentNode.firstChild.firstChild.src;
+                            console.log("doh_testing: "+doh_Draw_icon_src_1);
+                            
+                            //edit Draw
+                            robot.sequence(function(){  
+                              //change Draw name
+                              var action = query(".jimu-input")[0];
+                              console.log(action);
                               console.log(Date.now());
-                              robot.mouseMoveAt(Draw, 100, 1000, Number(37), Number(-50));
-                              //doh check Draw-btn delete state 2
-                              var doh_Draw_btn_delete_state_2 = Draw.parentNode.id;
-                              console.log("doh_testing: "+doh_Draw_btn_delete_state_2);
-                              //doh check icon Src 1
-                              var doh_Draw_icon_src_1 = Draw.parentNode.firstChild.firstChild.src;
-                              console.log("doh_testing: "+doh_Draw_icon_src_1);
-                              //click edit button
-                              robot.sequence(function(){                              
-                                var edit_btn = query(".edit-btn")[0];
-                                console.log(edit_btn);
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.keyPress(keys.TAB,0);
+                              robot.keyPress(keys.TAB,0,{shift:true});
+                              robot.typeKeys("testB_Draw",100,200);
+                              //click delete distance
+                              var distance = query(".action-item-parent")[9].lastChild;
+                              console.log(distance);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(distance, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //change distance_unit
+                              distance = query(".label.simple-table-td.empty-text-td")[8].firstChild.firstChild.firstChild.firstChild;
+                              console.log(distance);
+                              console.log(Date.now());
+                              //doh check distance_unit 1
+                              var doh_distance_unit_change_1 = distance.lastChild.value;
+                              console.log("doh_testing distance_unit change :"+doh_distance_unit_change_1);
+                              robot.mouseMoveAt(distance, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.mouseMoveAt(distance, 100, 1000, Number(80), Number(70));
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //add distance
+                              robot.sequence(function(){ 
+                                //doh check distance_unit 2
+                                var doh_distance_unit_change_2 = distance.lastChild.value;
+                                console.log("doh_testing distance_unit change :"+doh_distance_unit_change_2);
+                                action = query("[data-dojo-attach-point=btnAddDistance]")[0];
+                                console.log(action);
                                 console.log(Date.now());
-                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                //edit Draw
-                                robot.sequence(function(){  
-                                  //change Draw name
-                                  var action = query(".jimu-input")[0];
+                                //doh check distance unit added
+                                robot.sequence(function(){ 
+                                  var doh_distance_unit_add = query("tr[rowid]",query(".simple-table-tbody")[1]).length == 5;
+                                  console.log("doh_testing distance_unit add :"+doh_distance_unit_add);
+                                  //click Areas
+                                  action = query("[label=Areas]")[0];
                                   console.log(action);
                                   console.log(Date.now());
                                   robot.mouseMoveAt(action, 100, 1000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.keyPress(keys.TAB,0);
-                                  robot.keyPress(keys.TAB,0,{shift:true});
-                                  robot.typeKeys("testB_Draw",100,200);
-                                  //click delete distance
-                                  var distance = query(".action-item-parent")[9].lastChild;
-                                  console.log(distance);
+                                  //click delete areas
+                                  var areas = query(".action-item-parent")[23].lastChild;
+                                  console.log(areas);
                                   console.log(Date.now());
-                                  robot.mouseMoveAt(distance, 100, 1000);
+                                  robot.mouseMoveAt(areas, 100, 1000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //change distance_unit
-                                  distance = query(".label.simple-table-td.empty-text-td")[8].firstChild.firstChild.firstChild.firstChild;
-                                  console.log(distance);
+                                  //change areas_unit
+                                  areas = query(".label.simple-table-td.empty-text-td")[22].firstChild.firstChild.firstChild.firstChild;
+                                  console.log(areas);
                                   console.log(Date.now());
-                                  //doh check distance_unit 1
-                                  var doh_distance_unit_change_1 = distance.lastChild.value;
-                                  console.log("doh_testing distance_unit change :"+doh_distance_unit_change_1);
-                                  robot.mouseMoveAt(distance, 100, 1000);
+                                  //doh check areas_unit 1
+                                  var doh_areas_unit_change_1 = areas.lastChild.value;
+                                  console.log("doh_testing areas_unit change :"+doh_areas_unit_change_1);
+                                  robot.mouseMoveAt(areas, 100, 1000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.mouseMoveAt(distance, 100, 1000, Number(80), Number(70));
+                                  robot.mouseMoveAt(areas, 100, 1000, Number(80), Number(70));
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //add distance
+                                  //add areas
                                   robot.sequence(function(){ 
-                                    //doh check distance_unit 2
-                                    var doh_distance_unit_change_2 = distance.lastChild.value;
-                                    console.log("doh_testing distance_unit change :"+doh_distance_unit_change_2);
-                                    action = query("[data-dojo-attach-point=btnAddDistance]")[0];
+                                    //doh check areas_unit 2
+                                    var doh_areas_unit_change_2 = areas.lastChild.value;
+                                    console.log("doh_testing areas_unit change :"+doh_areas_unit_change_2);
+                                    action = query("[data-dojo-attach-point=btnAddArea]")[0];
                                     console.log(action);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(action, 100, 1000);
                                     robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    //doh check distance unit added
+                                    //doh check areas unit added
                                     robot.sequence(function(){ 
-                                      var doh_distance_unit_add = query("tr[rowid]",query(".simple-table-tbody")[1]).length == 5;
-                                      console.log("doh_testing distance_unit add :"+doh_distance_unit_add);
-                                      //click Areas
-                                      action = query("[label=Areas]")[0];
+                                      var doh_areas_unit_add = query("tr[rowid]",query(".simple-table-tbody")[3]).length == 7;
+                                      console.log("doh_testing areas_unit add :"+doh_distance_unit_add);
+                                      //change icon
+                                      action = query(".change-icon")[1];
                                       console.log(action);
                                       console.log(Date.now());
                                       robot.mouseMoveAt(action, 100, 1000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //click delete areas
-                                      var areas = query(".action-item-parent")[23].lastChild;
-                                      console.log(areas);
+                                      //move down areas
+                                      var move_down_areas = query(".action-item.row-down-div")[17];
+                                      console.log(move_down_areas);
                                       console.log(Date.now());
-                                      robot.mouseMoveAt(areas, 100, 1000);
+                                      robot.mouseMoveAt(move_down_areas, 100, 5000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //change areas_unit
-                                      areas = query(".label.simple-table-td.empty-text-td")[22].firstChild.firstChild.firstChild.firstChild;
-                                      console.log(areas);
+                                      //move up areas
+                                      var move_up_areas = query(".action-item.row-up-div")[20];
+                                      console.log(move_up_areas);
                                       console.log(Date.now());
-                                      //doh check areas_unit 1
-                                      var doh_areas_unit_change_1 = areas.lastChild.value;
-                                      console.log("doh_testing areas_unit change :"+doh_areas_unit_change_1);
-                                      robot.mouseMoveAt(areas, 100, 1000);
+                                      robot.mouseMoveAt(move_up_areas, 100, 1000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      robot.mouseMoveAt(areas, 100, 1000, Number(80), Number(70));
-                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //add areas
+                                      //doh check move down & up areas 
                                       robot.sequence(function(){ 
-                                        //doh check areas_unit 2
-                                        var doh_areas_unit_change_2 = areas.lastChild.value;
-                                        console.log("doh_testing areas_unit change :"+doh_areas_unit_change_2);
-                                        action = query("[data-dojo-attach-point=btnAddArea]")[0];
-                                        console.log(action);
+                                        var doh_areas_move_down = query(".simple-table-td.normal-text-td.abbr")[17].firstChild.innerText == "sq mi";
+                                        var doh_areas_move_up = query(".simple-table-td.normal-text-td.abbr")[20].firstChild.innerText == "ac";
+                                        console.log('doh_testing:'+ doh_areas_move_down+"\n"+doh_areas_move_up);
+                                        //click ok button
+                                        ok_btn = query(".jimu-popup-btn")[2];
+                                        console.log(ok_btn);
                                         console.log(Date.now());
-                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseMoveAt(ok_btn, 100, 1000);
                                         robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                        //doh check areas unit added
-                                        robot.sequence(function(){ 
-                                          var doh_areas_unit_add = query("tr[rowid]",query(".simple-table-tbody")[3]).length == 7;
-                                          console.log("doh_testing areas_unit add :"+doh_distance_unit_add);
-                                          //change icon
-                                          action = query(".change-icon")[1];
-                                          console.log(action);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //move down areas
-                                          var move_down_areas = query(".action-item.row-down-div")[17];
-                                          console.log(move_down_areas);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(move_down_areas, 100, 5000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //move up areas
-                                          var move_up_areas = query(".action-item.row-up-div")[20];
-                                          console.log(move_up_areas);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(move_up_areas, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //doh check move down & up areas 
-                                          robot.sequence(function(){ 
-                                            var doh_areas_move_down = query(".simple-table-td.normal-text-td.abbr")[17].firstChild.innerText == "sq mi";
-                                            var doh_areas_move_up = query(".simple-table-td.normal-text-td.abbr")[20].firstChild.innerText == "ac";
-                                            console.log('doh_testing:'+ doh_areas_move_down+"\n"+doh_areas_move_up);
-                                            //click ok button
-                                            ok_btn = query(".jimu-popup-btn")[2];
-                                            console.log(ok_btn);
-                                            console.log(Date.now());
-                                            robot.mouseMoveAt(ok_btn, 100, 1000);
-                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                            //添加断言        
-                                            robot.sequence(def.getTestCallback(function(){
-                                              var doh_Draw_Name = query("[title=testB_Draw]")[0].innerText;
-                                              var doh_Draw_icon_src_2 = query("[title=testB_Draw]")[0].parentNode.firstChild.firstChild.src;
-                                              console.log('doh_testing icon src:'+doh_Draw_icon_src_2); 
-                                              console.log('doh_testing:');                          
-                                              doh.isNot(doh_Draw_btn_delete_state_1,doh_Draw_btn_delete_state_2,"Draw has been deleted!");
-                                              doh.t(doh_distance_unit_add,"distance unit has been added!");
-                                              doh.t(doh_areas_unit_add,"areas unit has been added!");
-                                              doh.isNot(doh_distance_unit_change_2,doh_distance_unit_change_1,"distance unit has been chagned!");
-                                              doh.isNot(doh_areas_unit_change_1,doh_areas_unit_change_2,"areas unit has been chagned!");
-                                              doh.isNot(doh_Draw_icon_src_2,doh_Draw_icon_src_1,"icon has been changed!");
-                                              doh.isNot("Draw",doh_Draw_Name,"Draw name has been changed!");
-                                              doh.t(doh_areas_move_up,"areas move up is :"+doh_areas_move_up);
-                                              doh.t(doh_areas_move_down,"areas move down is :"+doh_areas_move_down);
-                                              
-                                            }), 3000);//添加断言
-                                          },2000);//doh check move down & up areas 
-                                        },2000);//doh check areas unit added
-                                      },2000);//add areas
-                                    },2000);//doh check distance unit added
-                                  },2000);//add distance
-                                },2000);//edit Draw
-                              },2000);//click edit button
-                            },2000);//move mouse to the new Draw
+                                        //添加断言        
+                                        robot.sequence(def.getTestCallback(function(){
+                                          //doh check Draw-btn delete state 2
+                                          var doh_Draw_btn_delete_state_2 = query("[title=testB_Draw]")[0].parentNode.id;
+                                          console.log("doh_testing: "+doh_Draw_btn_delete_state_2);
+                                          var doh_Draw_Name = query("[title=testB_Draw]")[0].innerText;
+                                          var doh_Draw_icon_src_2 = query("[title=testB_Draw]")[0].parentNode.firstChild.firstChild.src;
+                                          console.log('doh_testing icon src:'+doh_Draw_icon_src_2); 
+                                          console.log('doh_testing:');                          
+                                          doh.isNot(doh_Draw_btn_delete_state_1,doh_Draw_btn_delete_state_2,"Draw has been deleted!");
+                                          doh.t(doh_distance_unit_add,"distance unit has been added!");
+                                          doh.t(doh_areas_unit_add,"areas unit has been added!");
+                                          doh.isNot(doh_distance_unit_change_2,doh_distance_unit_change_1,"distance unit has been chagned!");
+                                          doh.isNot(doh_areas_unit_change_1,doh_areas_unit_change_2,"areas unit has been chagned!");
+                                          doh.isNot(doh_Draw_icon_src_2,doh_Draw_icon_src_1,"icon has been changed!");
+                                          doh.isNot("Draw",doh_Draw_Name,"Draw name has been changed!");
+                                          doh.t(doh_areas_move_up,"areas move up is :"+doh_areas_move_up);
+                                          doh.t(doh_areas_move_down,"areas move down is :"+doh_areas_move_down);
+                                          
+                                        }), 3000);//添加断言
+                                      },2000);//doh check move down & up areas 
+                                    },2000);//doh check areas unit added
+                                  },2000);//add areas
+                                },2000);//doh check distance unit added
+                              },2000);//add distance
+                            },2000);//edit Draw
                           },2000);// click Draw
                         },2000);//choose Draw
                       },2000);//add Draw

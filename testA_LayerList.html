@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_LayerList', {
           name: 'testA_LayerList',
           timeout: 100000,
@@ -45,7 +45,7 @@
                 robot.mouseMoveAt(layerList_btn, 200, 3000, Number(50), Number(50));
                 //zoom to a layer
                 robot.sequence(function(){
-                  var action = query(".layers-list-popupMenu-div")[6];
+                  var action = query(".layers-list-popupMenu-div")[0];
                   console.log(action);
                   console.log(Date.now());
                   robot.mouseMoveAt(action, 200, 200);
@@ -57,7 +57,7 @@
                     console.log(Date.now());
                     robot.mouseMoveAt(action, 200, 200);
                     robot.mouseClick({left: true}, 300);
-                    action = query(".layers-list-popupMenu-div")[6];
+                    action = query(".layers-list-popupMenu-div")[0];
                     console.log(action);
                     console.log(Date.now());
                     robot.mouseMoveAt(action, 200, 200);
@@ -86,33 +86,33 @@
                         robot.sequence(function(){
                           var doh_transparent_2 = layerList_btn.getAttribute("aria-valuenow");
                           console.log("doh_testing : "+doh_transparent_2);
-                          //move up
-                          action = query(".menu-item")[2];
+                          //move down
+                          action = query(".menu-item")[3];
                           console.log(action);
                           console.log(Date.now());
                           robot.mouseMoveAt(action, 200, 200);
                           robot.mouseClick({left: true}, 300);
-                          //doh check move up
+                          //doh check move down
                           robot.sequence(function(){
-                            var doh_move_up = query(".div-content")[1].innerText == "worldRivers - rivers";
+                            var doh_move_up = query(".div-content")[1].innerText == "SampleWorldCities - Cities";
                             console.log("doh_move_up : "+doh_move_up);
                             action = query(".layers-list-popupMenu-div")[1];
                             console.log(action);
                             console.log(Date.now());
                             robot.mouseMoveAt(action, 200, 200);
                             robot.mouseClick({left: true}, 300);
-                            //move down
+                            //move up
                             robot.sequence(function(){
-                              action = query(".menu-item")[3];
+                              action = query(".menu-item")[2];
                               console.log(action);
                               console.log(Date.now());
                               robot.mouseMoveAt(action, 200, 200);
                               robot.mouseClick({left: true}, 300);
-                              //doh check move down
+                              //doh check move up
                               robot.sequence(function(){
-                                var doh_move_down = query(".div-content")[6].innerText == "worldRivers - rivers";
+                                var doh_move_down = query(".div-content")[0].innerText == "SampleWorldCities - Cities";
                                 console.log("doh_move_down : "+doh_move_down);
-                                action = query(".layers-list-popupMenu-div")[6];
+                                action = query(".layers-list-popupMenu-div")[0];
                                 console.log(action);
                                 console.log(Date.now());
                                 robot.mouseMoveAt(action, 200, 200);

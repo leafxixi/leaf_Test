@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_Directions', {
           name: 'testA_Directions',
           timeout: 100000,
@@ -77,16 +77,16 @@
                       console.log(Date.now());
                       robot.mouseMoveAt(action, 100, 1000);
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                      robot.typeKeys("New York City",100,5000);
-                      robot.mouseMoveAt(action, 100, 1000, Number(75), Number(50));
+                      robot.typeKeys("New York City",100,200);
+                      robot.mouseMoveAt(action, 100, 10000, Number(75), Number(50));
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
                       action = query(".esriStopGeocoderColumn")[1];
                       console.log(action);
                       console.log(Date.now());
                       robot.mouseMoveAt(action, 100, 1000);
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                      robot.typeKeys("Philade",100,5000);                      
-                      robot.mouseMoveAt(action, 100, 1000, Number(75), Number(50));
+                      robot.typeKeys("Philadephia",100,200);                      
+                      robot.mouseMoveAt(action, 100, 10000, Number(75), Number(75));
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
                       //click more options button
                       robot.sequence(function(){ 
@@ -131,7 +131,7 @@
 
                             console.log('doh_testing:'+doh_units_using);  
                             doh.t(doh_using_traffic,"Using traffic is :"+doh_using_traffic);
-                            doh.is("198.43 英里 · 4 小时 27 分钟",doh_units_using,"Units is using MI(英里)");
+                            doh.t(("198.43 英里 · 4 小时 27 分钟"==doh_units_using )|| ("198.43 miles · 4 hours 27 minutes" == doh_units_using),"Units is using MI(英里)");
                             doh.t(doh_return_to_start,"Return to start is :"+doh_return_to_start);
                           }), 3000);//添加断言  
                         },2000);

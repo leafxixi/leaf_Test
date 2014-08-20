@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_Geoprocessing', {
           name: 'testA_Geoprocessing',
           timeout: 100000,
@@ -43,26 +43,15 @@
                 console.log(Date.now());
                 robot.mouseMoveAt(Geoprocessing_btn, 100, 1000);
                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                //zoom to New York via search
-                var action = query(".esriGeocoderMenuArrow.esriGeocoderIcon")[0];
-                console.log(action);
-                console.log(Date.now());
-                robot.mouseMoveAt(action, 100, 1000);
-                robot.mouseClick({left:true, middle:false, right:false}, 100);
                 //choose Esri world Geocoder
                 robot.sequence(function(){
-                  action = query(".esriGeocoderResult.esriGeocoderResultEven.esriGeocoderResultLast")[0];
-                  console.log(action);
-                  console.log(Date.now());
-                  robot.mouseMoveAt(action, 100, 1000);
-                  robot.mouseClick({left:true, middle:false, right:false}, 100);
                   //input New York City
-                  action = query(".esriGeocoder.esriGeocoderMultiple")[0];
+                  var action = query("[placeholder=Esri World Geocoder]")[0];
                   console.log(action);
                   console.log(Date.now());
                   robot.mouseMoveAt(action, 100, 1000);
                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                  robot.typeKeys("New York City",100,4000);
+                  robot.typeKeys("New York City",100,5000);
                   robot.keyPress(keys.ENTER,0);
                   //put a start location on map 
                   robot.sequence(function(){
@@ -104,7 +93,7 @@
                       robot.sequence(function(){
                         var doh_result_clear = query(".layersDiv")[0].lastChild.childNodes.length;
                         console.log('doh_result_clear:'+doh_result_clear);
-                        var doh_start_location_init = query(".layersDiv")[0].lastChild.childNodes[7].childNodes.length;
+                        var doh_start_location_init = query(".layersDiv")[0].lastChild.childNodes[2].childNodes.length;
                         console.log('doh_start_location_init:'+doh_start_location_init);
                         action = query(".drawings-clear")[0];
                         console.log(action);
@@ -113,7 +102,7 @@
                         robot.mouseClick({left:true, middle:false, right:false}, 100);
                         //添加断言        
                         robot.sequence(def.getTestCallback(function(){
-                          var doh_start_location_clear = query(".layersDiv")[0].lastChild.childNodes[7].childNodes.length;
+                          var doh_start_location_clear = query(".layersDiv")[0].lastChild.childNodes[2].childNodes.length;
                           console.log('doh_start_location_clear:'+doh_start_location_clear);
                           console.log('doh_testing:'); 
                           doh.isNot(doh_result_init,doh_result,"Geoprocessing runs successfully!");

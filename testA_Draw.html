@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/apps/9/');
+      robot.initRobot('http://leaf:3344/webappbuilder/apps/2/');
         doh.register('testA_Draw', {
           name: 'testA_Draw',
           timeout: 100000,
@@ -63,18 +63,20 @@
                   //select color
                   robot.sequence(function(){
                     action = query("td[title=橙色]")[0];
+                    if(action == undefined){
+                      action = query("td[title=orange]")[0];
+                    }
                     console.log(action);
                     console.log(Date.now());
                     robot.mouseMoveAt(action, 100, 1000);
                     robot.mouseClick({left:true, middle:false, right:false}, 100);
-                    action = query(".dijitReset.dijitInputInner")[21];
+                    action = query(".dijitSliderImageHandle.dijitSliderImageHandleH")[8];
                     console.log(action);
                     console.log(Date.now());
                     robot.mouseMoveAt(action, 100, 1000);
-                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                    robot.keyPress(keys.TAB,0);
-                    robot.keyPress(keys.TAB,0,{shift:true});
-                    robot.typeKeys("0.2",100,200);
+                    robot.mousePress({left: true, middle:false, right:false}, 300);
+                    robot.mouseMoveAt(query(".dijitSliderButtonInner")[17], 200, 2000);
+                    robot.mouseRelease({left: true, middle:false, right:false}, 300);
                     action = query(".jimu-color-picker")[16];
                     console.log(action);
                     console.log(Date.now());
@@ -83,11 +85,14 @@
                     //select outline color
                     robot.sequence(function(){
                       action = query("td[title=绯红色]")[1];
+                      if(action == undefined){
+                        action = query("td[title=crimson]")[1];
+                      }
                       console.log(action);
                       console.log(Date.now());
                       robot.mouseMoveAt(action, 100, 1000);
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                      action = query(".dijitReset.dijitInputInner")[22];
+                      action = query(".dijitReset.dijitInputInner")[13];
                       console.log(action);
                       console.log(Date.now());
                       robot.mouseMoveAt(action, 100, 1000);
@@ -135,11 +140,11 @@
                           robot.mouseRelease({left: true, middle:false, right:false}, 300);
                           //clear
                           robot.sequence(function(){
-                            var doh_handler = query(".layersDiv")[0].lastChild.childNodes[7];
+                            var doh_handler = query(".layersDiv")[0].lastChild.childNodes[2];
                             var doh_clear_1 = doh_handler.childNodes.length;
                             //doh check
                             var doh_color = doh_handler.childNodes[1].getAttribute("fill")=="rgb(255, 165, 0)";
-                            var doh_alpha = doh_handler.childNodes[1].getAttribute("fill-opacity")==0.2;
+                            var doh_alpha = doh_handler.childNodes[1].getAttribute("fill-opacity")==0;
                             var doh_outline_color = doh_handler.childNodes[1].getAttribute("stroke")=="rgb(220, 20, 60)";
                             var doh_outline_width = doh_handler.childNodes[1].getAttribute("stroke-width")==5;
                             var doh_measure_area = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[8].parentNode.parentNode.lastChild.value=="HECTARES";

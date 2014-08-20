@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_AttributeTable', {
           name: 'testB_AttributeTable',
           timeout: 1000000,
@@ -45,7 +45,7 @@
 
               // click AttributeTable Icon
               robot.sequence(function(){
-                var AttributeTable = query("[title=AttributeTable]")[0];
+                var AttributeTable = query("[title=Attribute Table]")[0];
                 console.log(AttributeTable);
                 console.log(Date.now());
                 //show:check the checkbox
@@ -59,7 +59,7 @@
                   robot.mouseClick({left: true}, 100);
                   //doh check record visibility 
                   robot.sequence(function(){
-                    AttributeTable = query("[title=AttributeTable]")[0];
+                    AttributeTable = query("[title=Attribute Table]")[0];
                     var doh_visibility = AttributeTable.parentNode.className;                   
                     robot.mouseClick({left: true}, 1000); 
                     // click edit button
@@ -127,48 +127,53 @@
                                   console.log(Date.now());
                                   robot.mouseMoveAt(Symbol_item, 200, 200);
                                   robot.mouseClick({left: true}, 100);                                  
-                                  var Symbol_color = query(".jimu-color-picker")[3];
+                                  var Symbol_color = query(".jimu-color-picker")[0];
                                   console.log(Symbol_color);
                                   console.log(Date.now());
                                   robot.mouseMoveAt(Symbol_color, 200, 200);
                                   robot.mouseClick({left: true}, 100);   
                                   // choose color
                                   robot.sequence(function(){ 
-                                    var color = query("td[title=杨李色]")[0];
+                                    var color;
+                                    color = query("td[title=橙色]")[0];
+                                    if(color == undefined){
+                                      color = query("td[title=orange]")[0];
+                                    }
                                     console.log(color);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(color, 200, 200);
                                     robot.mouseClick({left: true}, 100);
 
-                                    var Symbol_alpha = query(".dijitReset.dijitInputInner")[5];
+                                    var Symbol_alpha = query(".dijitSliderImageHandle.dijitSliderImageHandleH")[0];
                                     console.log(Symbol_alpha);
                                     console.log(Date.now());
-                                    robot.mouseMoveAt(Symbol_alpha, 200, 200);
-                                    robot.mouseClick({left: true}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("0.5",100,200);    
+                                    robot.mouseMoveAt(Symbol_alpha, 100, 1000);
+                                    robot.mousePress({left: true, middle:false, right:false}, 300);
+                                    robot.mouseMoveAt(query(".dijitSliderButtonInner")[0], 200, 2000);
+                                    robot.mouseRelease({left: true, middle:false, right:false}, 300);
 
-                                    var Symbol_outline_color = query(".jimu-color-picker")[4];
+                                    var Symbol_outline_color = query(".jimu-color-picker")[1];
                                     console.log(Symbol_outline_color);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(Symbol_outline_color, 200, 200);
                                     robot.mouseClick({left: true}, 100); 
                                     // choose outline color
                                     robot.sequence(function(){ 
-                                      color = query("td[title=品蓝]")[1];
+                                      color = query("td[title=绯红色]")[1];
+                                      if(color == undefined){
+                                        color = query("td[title=crimson]")[1];
+                                      }
                                       console.log(color);
                                       console.log(Date.now());
                                       robot.mouseMoveAt(color, 200, 200);
                                       robot.mouseClick({left: true}, 100);
 
-                                      var Symbol_outline_width = query(".dijitReset.dijitInputInner")[6];
+                                      var Symbol_outline_width = query(".dijitReset.dijitInputInner")[2];
                                       console.log(Symbol_outline_width);
                                       console.log(Date.now());
                                       robot.mouseMoveAt(Symbol_outline_width, 200, 200);
                                       robot.mouseClick({left: true}, 100);
-                                      robot.keyPress(keys.TAB,0,{shift:true});
-                                      robot.keyPress(keys.TAB,0);
+                                      robot.keyPress(keys.BACKSPACE,10);
                                       robot.typeKeys("5",100,200);
 
                                       okBtn = query(".jimu-popup-btn")[2];

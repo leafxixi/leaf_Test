@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Basemap Gallery', {
           name: 'testB_Basemap Gallery',
           timeout: 100000,
@@ -100,202 +100,195 @@
                           console.log(Date.now());
                           robot.mouseMoveAt(ok_btn, 100, 1000);
                           robot.mouseClick({left:true, middle:false, right:false}, 100);
-                          //move mouse to the new BasemaoGallery
-                          robot.sequence(function(){
-                            Basemap_gallery = query("[title $= Gallery_3]")[0];
-                            console.log(Basemap_gallery);
+                          
+                          //edit basemap gallery
+                          robot.sequence(function(){  
+                            //change basemap gallery name
+                            var action = query(".jimu-input")[0];
+                            console.log(action);
                             console.log(Date.now());
-                            robot.mouseMoveAt(Basemap_gallery, 100, 1000, Number(37), Number(-50));
-                            //doh check bookmark-btn delete state 2
-                            var doh_Basemap_btn_delete_state_2 = Basemap_gallery.parentNode.id;
-                            // console.log("doh_testing: "+doh_Basemap_btn_delete_state_2);
-                            //click edit button
-                            robot.sequence(function(){               
-                              var edit_btn = query(".edit-btn")[0];
-                              console.log(edit_btn);
+                            robot.mouseMoveAt(action, 100, 1000);
+                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            robot.keyPress(keys.TAB,0);
+                            robot.keyPress(keys.TAB,0,{shift:true});
+                            robot.typeKeys("testB_basemapgallery",100,200);                                 
+                            // //change include.portal's.basemap_checkbox
+                            // action = query(".jimu-checkbox")[2];
+                            // console.log(action);
+                            // console.log(Date.now());
+                            // robot.mouseMoveAt(action, 100, 1000);
+                            // robot.mouseClick({left:true, middle:false, right:false}, 100);
+                            // robot.mouseClick({left:true, middle:false, right:false}, 1000);
+                            //add new basemap
+                            robot.sequence(function(){ 
+                              action = query(".add_map_text")[0];
+                              console.log(action);
                               console.log(Date.now());
-                              robot.mouseMoveAt(edit_btn, 100, 1000);
+                              robot.mouseMoveAt(action, 100, 1000);
                               robot.mouseClick({left:true, middle:false, right:false}, 100);
-                              //edit basemap gallery
-                              robot.sequence(function(){  
-                                //change basemap gallery name
-                                var action = query(".jimu-input")[0];
+                              //add sublaer
+                              robot.sequence(function(){ 
+                                //change title
+                                action = query(".dijitPlaceHolder.dijitInputField")[0];
                                 console.log(action);
                                 console.log(Date.now());
                                 robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                robot.keyPress(keys.TAB,0);
-                                robot.keyPress(keys.TAB,0,{shift:true});
-                                robot.typeKeys("testB_basemapgallery",100,200);                                 
-                                //change include.portal's.basemap_checkbox
-                                action = query(".jimu-checkbox")[2];
+                                robot.typeKeys("test_World_Street_Map",100,200); 
+                                //change URL
+                                action = query(".dijitPlaceHolder.dijitInputField")[1];
                                 console.log(action);
                                 console.log(Date.now());
                                 robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.typeKeys("http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer",100,200);
+                                //add a new Sublayer RUL
+                                action = query(".add-layer-url-icon")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 200);
                                 robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                //add new basemap
-                                robot.sequence(function(){ 
-                                  action = query(".add_map_text")[0];
+                                //delete a new Sublayer RUL
+                                robot.sequence(function(){
+                                  action = query(".delete-layer-url-icon")[0];
                                   console.log(action);
                                   console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //add sublaer
-                                  robot.sequence(function(){ 
-                                    //change title
-                                    action = query(".dijitPlaceHolder.dijitInputField")[0];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.typeKeys("test_World_Street_Map",100,200); 
-                                    //change URL
-                                    action = query(".dijitPlaceHolder.dijitInputField")[1];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.typeKeys("http://server.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer",100,200);
-                                    //add & delete a new Sublayer RUL
-                                    action = query(".add-layer-url-icon")[0];
+                                  robot.mouseMoveAt(action, 100, 200);
+                                  robot.mouseClick({left:true, middle:false, right:false}, 1000);
+                                  //change Thumbnail
+                                  robot.sequence(function(){
+                                    action = query(".thumbnail-img")[0];
                                     console.log(action);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(action, 100, 200);
                                     robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                    //change Thumbnail
+                                    //needs selection by man   **此处有问题，如果选择的图片文件高度过大，则会导致整个排版下移，无法选中下面的ok-btn
+                                    //chick ok button 
                                     robot.sequence(function(){
-                                      action = query(".thumbnail-img")[1];
-                                      console.log(action);
+                                      ok_btn = query(".jimu-popup-btn")[6];
+                                      console.log(ok_btn);
                                       console.log(Date.now());
-                                      robot.mouseMoveAt(action, 100, 200);
+                                      robot.mouseMoveAt(ok_btn, 100, 1000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                      //needs selection by man   **此处有问题，如果选择的图片文件高度过大，则会导致整个排版下移，无法选中下面的ok-btn
-                                      //chick ok button 
+                                      //back to edit
                                       robot.sequence(function(){
-                                        ok_btn = query(".jimu-popup-btn")[6];
+                                        //change basemap gallery icon                              
+                                        action = query(".jimu-image-chooser.js-fileapi-wrapper.change-icon")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 1000);
+                                        //needs selection by man
+                                        //chick ok button
+                                        ok_btn = query(".jimu-popup-btn")[2];
                                         console.log(ok_btn);
                                         console.log(Date.now());
                                         robot.mouseMoveAt(ok_btn, 100, 1000);
                                         robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                        //back to edit
+                                        //test edit cancel-btn
                                         robot.sequence(function(){
-                                          //change basemap gallery icon                              
-                                          action = query(".jimu-image-chooser.js-fileapi-wrapper.change-icon")[0];
-                                          console.log(action);
+                                          Basemap_gallery = query('[title=testB_basemapgallery]')[0];
+                                          console.log(Basemap_gallery);
                                           console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                          //needs selection by man
-                                          //chick ok button
-                                          ok_btn = query(".jimu-popup-btn")[2];
-                                          console.log(ok_btn);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(ok_btn, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 1000);
-                                          //test edit cancel-btn
-                                          robot.sequence(function(){
-                                            Basemap_gallery = query('[title=testB_basemapgallery]')[0];
-                                            console.log(Basemap_gallery);
+                                          robot.mouseMoveAt(Basemap_gallery, 100, 1000, Number(37) , Number(-50) );
+                                          //click edit button
+                                          robot.sequence(function(){ 
+                                            edit_btn = query(".edit-btn")[0];
+                                            console.log(edit_btn);
                                             console.log(Date.now());
-                                            robot.mouseMoveAt(Basemap_gallery, 100, 1000, Number(37) , Number(-50) );
-                                            //click edit button
-                                            robot.sequence(function(){ 
-                                              edit_btn = query(".edit-btn")[0];
-                                              console.log(edit_btn);
+                                            robot.mouseMoveAt(edit_btn, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            //edit basemap gallery
+                                            robot.sequence(function(){  
+                                              //change basemap gallery name
+                                              action = query(".jimu-input")[0];
+                                              console.log(action);
                                               console.log(Date.now());
-                                              robot.mouseMoveAt(edit_btn, 100, 1000);
+                                              robot.mouseMoveAt(action, 100, 1000);
                                               robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                              //edit basemap gallery
-                                              robot.sequence(function(){  
-                                                //change basemap gallery name
-                                                action = query(".jimu-input")[0];
-                                                console.log(action);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(action, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                robot.keyPress(keys.TAB,0);
-                                                robot.keyPress(keys.TAB,0,{shift:true});
-                                                robot.typeKeys("testB_basemapgallery_changed",100,200);  
-                                                //click cancel-btn
-                                                ok_btn = query(".jimu-popup-btn")[0];
-                                                console.log(ok_btn);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(ok_btn, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                //check the cancel-btn's result
-                                                var BuilderQuery = query;
-                                                robot.sequence(function(){
-                                                //跳转右侧
-                                                  robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
-                                                    //doh check the basemap gallery Name
-                                                    var doh_Basemap_Name = Basemap_gallery.innerText;
-                                                    // console.log("doh_testing: "+doh_Basemap_Name);
-                                                    //click basemap gallery in App Bar
-                                                    var more_btn = query("[title=more]")[0];  
-                                                    var flag = undefined != more_btn ; 
-                                                    console.log(more_btn);
-                                                    console.log(flag);
-                                                    console.log(Date.now()); 
+                                              robot.keyPress(keys.TAB,0);
+                                              robot.keyPress(keys.TAB,0,{shift:true});
+                                              robot.typeKeys("testB_basemapgallery_changed",100,200);  
+                                              //click cancel-btn
+                                              ok_btn = query(".jimu-popup-btn")[0];
+                                              console.log(ok_btn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(ok_btn, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //check the cancel-btn's result
+                                              var BuilderQuery = query;
+                                              robot.sequence(function(){
+                                              //跳转右侧
+                                                robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                                  //doh check bookmark-btn delete state 2
+                                                  var doh_Basemap_btn_delete_state_2 = BuilderQuery("[title=testB_basemapgallery]")[0].parentNode.id;
+                                                  console.log("doh_Basemap_btn_delete_state_2: "+doh_Basemap_btn_delete_state_2);
+                                                  //doh check the basemap gallery Name
+                                                  var doh_Basemap_Name = Basemap_gallery.innerText;
+                                                  // console.log("doh_testing: "+doh_Basemap_Name);
+                                                  //click basemap gallery in App Bar
+                                                  var more_btn = query("[title=more]")[0];  
+                                                  var flag = undefined != more_btn ; 
+                                                  console.log(more_btn);
+                                                  console.log(flag);
+                                                  console.log(Date.now()); 
+                                                  if(flag){
+                                                    robot.mouseMoveAt(more_btn, 10, 10);
+                                                    robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                                  }else{
+                                                    action = query(".icon-node")[0];
+                                                    console.log(action);
+                                                    console.log(Date.now());
+                                                    robot.mouseMoveAt(action, 100, 1000);
+                                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                  }
+                                                  // if there is a more btn
+                                                  robot.sequence(function(){
                                                     if(flag){
-                                                      robot.mouseMoveAt(more_btn, 10, 10);
-                                                      robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                                    }else{
-                                                      action = query(".icon-node")[0];
+                                                      var next_page = query(".points-inner")[0];
+                                                      if(next_page != undefined && next_page.hasChildNodes()){
+                                                        console.log(next_page);
+                                                        console.log(Date.now());
+                                                        robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                        robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                                      }
+                                                      var bookmark_btn = query("[title=testB_basemapgallery]")[0];
+                                                      console.log(bookmark_btn);
+                                                      console.log(Date.now());
+                                                      robot.mouseMoveAt(bookmark_btn, 100, 1000);
+                                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                    }
+                                                    //choose a basemap gallery
+                                                    robot.sequence(function(){
+                                                      //doh check basemap gallery icon in header
+                                                      var doh_icon_in_header = bookmark_btn.firstChild.src; 
+                                                      // console.log("icon src = "+ doh_icon_in_header);
+                                                      action = query(".esriBasemapGalleryThumbnail")[3];
                                                       console.log(action);
                                                       console.log(Date.now());
                                                       robot.mouseMoveAt(action, 100, 1000);
                                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                    }
-                                                    // if there is a more btn
-                                                    robot.sequence(function(){
-                                                      if(flag){
-                                                        var next_page = query(".points-inner")[0];
-                                                        if(next_page != undefined && next_page.hasChildNodes()){
-                                                          console.log(next_page);
-                                                          console.log(Date.now());
-                                                          robot.mouseMoveAt(next_page.lastChild, 10, 10);
-                                                          robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                                        }
-                                                        var bookmark_btn = query("[title=testB_basemapgallery]")[0];
-                                                        console.log(bookmark_btn);
-                                                        console.log(Date.now());
-                                                        robot.mouseMoveAt(bookmark_btn, 100, 1000);
-                                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                      }
-                                                      //choose a basemap gallery
-                                                      robot.sequence(function(){
-                                                        //doh check basemap gallery icon in header
-                                                        var doh_icon_in_header = bookmark_btn.firstChild.src; 
-                                                        // console.log("icon src = "+ doh_icon_in_header);
-                                                        action = query(".esriBasemapGalleryThumbnail")[3];
-                                                        console.log(action);
-                                                        console.log(Date.now());
-                                                        robot.mouseMoveAt(action, 100, 1000);
-                                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                        //添加断言        
-                                                        robot.sequence(def.getTestCallback(function(){
-                                                          console.log('doh_testing:');                          
-                                                          doh.isNot(doh_basemap_btn_delete_state_1,doh_Basemap_btn_delete_state_2,"Basemap Gallery has been deleted!");
-                                                          doh.is("testB_basemapgallery",doh_Basemap_Name,"Basemap Gallery Name has been changed!");
-                                                          doh.isNot("/webappbuilder/apps/9/widgets/BasemapGallery/images/icon.png",doh_icon_in_header,"Basemap Gallery icon has been changed!");
-                                                        }), 3000);//添加断言 
-                                                      },2000);//choose a basemap gallery
-                                                    },2000);// if there is a more btn
-                                                  });//跳转右侧
-                                                },2000);//check the cancel-btn's result
-                                              },2000);//edit basemap gallery
-                                            },2000);//click edit button
-                                          },2000);//test edit cancel-btn
-                                        },2000)//back to edit
-                                      },2000)//chick ok button
-                                    },2000);//change Thumbnail
-                                  },2000);//add sublaer
-                                },2000);//add new basemap                                
-                              },2000);//edit basemap gallery
-                            },2000); //click edit button
-                          },2000);//move mouse to the new BasemaoGallery
+                                                      //添加断言        
+                                                      robot.sequence(def.getTestCallback(function(){
+                                                        console.log('doh_testing:');                          
+                                                        doh.isNot(doh_basemap_btn_delete_state_1,doh_Basemap_btn_delete_state_2,"Basemap Gallery has been deleted!");
+                                                        doh.is("testB_basemapgallery",doh_Basemap_Name,"Basemap Gallery Name has been changed!");
+                                                        doh.isNot("/webappbuilder/apps/9/widgets/BasemapGallery/images/icon.png",doh_icon_in_header,"Basemap Gallery icon has been changed!");
+                                                      }), 3000);//添加断言 
+                                                    },2000);//choose a basemap gallery
+                                                  },2000);// if there is a more btn
+                                                });//跳转右侧
+                                              },2000);//check the cancel-btn's result
+                                            },2000);//edit basemap gallery
+                                          },2000);//click edit button
+                                        },2000);//test edit cancel-btn
+                                      },2000)//back to edit
+                                    },2000)//chick ok button
+                                  },2000);//change Thumbnail
+                                },2000);//delete a new Sublayer RUL
+                              },2000);//add sublaer
+                            },2000);//add new basemap                                
+                          },2000);//edit basemap gallery
                         },2000);// click basemapgallery
                       },2000);//choose basemap gallery 
                     },2000);//add Basemap gallery

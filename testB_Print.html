@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_Print', {
           name: 'testB_Print',
           timeout: 100000,
@@ -99,197 +99,182 @@
                             console.log(Date.now());
                             robot.mouseMoveAt(ok_btn, 100, 1000);
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                            //move mouse to the new Print
-                            robot.sequence(function(){
-                              Print = query("[title=Print]")[0];
-                              console.log(Print);
+                            //doh check icon Src 1
+                            var doh_Print_icon_src_1 = Print.parentNode.firstChild.firstChild.src;
+                            console.log("doh_Print_icon_src_1: "+doh_Print_icon_src_1);
+                            //clear the warning
+                            robot.sequence(function(){  
+                              ok_btn = query(".jimu-popup-btn")[4];
+                              console.log(ok_btn);
                               console.log(Date.now());
-                              robot.mouseMoveAt(Print, 100, 1000, Number(37), Number(-50));
-                              //doh check Print-btn delete state 2
-                              var doh_Print_btn_delete_state_2 = Print.parentNode.id;
-                              console.log("doh_Print_btn_delete_state_2: "+doh_Print_btn_delete_state_2);
-                              //doh check icon Src 1
-                              var doh_Print_icon_src_1 = Print.parentNode.firstChild.firstChild.src;
-                              console.log("doh_Print_icon_src_1: "+doh_Print_icon_src_1);
-                              //click edit button
-                              robot.sequence(function(){                              
-                                var edit_btn = query(".edit-btn")[0];
-                                console.log(edit_btn);
+                              robot.mouseMoveAt(ok_btn, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              //edit Print
+                              robot.sequence(function(){ 
+                                //change Print name
+                                var action = query(".jimu-input")[0];
+                                console.log(action);
                                 console.log(Date.now());
-                                robot.mouseMoveAt(edit_btn, 100, 1000);
+                                robot.mouseMoveAt(action, 100, 1000);
                                 robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                //clear the warning
-                                robot.sequence(function(){  
-                                  ok_btn = query(".jimu-popup-btn")[4];
-                                  console.log(ok_btn);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("testB_Print",100,200);
+                                //change service URL
+                                action = query(".dijitReset.dijitInputInner")[0];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",100,200);
+                                //change default title
+                                action = query(".dijitReset.dijitInputInner")[1];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("Print_test ArcGIS Web Map",100,200);
+                                //change default author
+                                action = query(".dijitReset.dijitInputInner")[2];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("Esri_MYe",100,200);
+                                action = query(".dijitReset.dijitInputInner")[3];
+                                console.log(action);
+                                console.log(Date.now());
+                                robot.mouseMoveAt(action, 100, 1000);
+                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                robot.keyPress(keys.TAB,0);
+                                robot.keyPress(keys.TAB,0,{shift:true});
+                                robot.typeKeys("Esri",100,200);
+                                //click default format
+                                robot.sequence(function(){
+                                  action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[0];
+                                  console.log(action);
                                   console.log(Date.now());
-                                  robot.mouseMoveAt(ok_btn, 100, 1000);
+                                  robot.mouseMoveAt(action, 100, 1000);
                                   robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  //edit Print
-                                  robot.sequence(function(){ 
-                                    //change Print name
-                                    var action = query(".jimu-input")[0];
+                                  //choose default format
+                                  robot.sequence(function(){
+                                    action = query(".dijitReset.dijitMenuItem")[4];
                                     console.log(action);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(action, 100, 1000);
                                     robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("testB_Print",100,200);
-                                    //change service URL
-                                    action = query(".dijitReset.dijitInputInner")[0];
+                                    action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[1];
                                     console.log(action);
                                     console.log(Date.now());
                                     robot.mouseMoveAt(action, 100, 1000);
                                     robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task",100,200);
-                                    //change default title
-                                    action = query(".dijitReset.dijitInputInner")[1];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("Print_test ArcGIS Web Map",100,200);
-                                    //change default author
-                                    action = query(".dijitReset.dijitInputInner")[2];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("Esri_MYe",100,200);
-                                    action = query(".dijitReset.dijitInputInner")[3];
-                                    console.log(action);
-                                    console.log(Date.now());
-                                    robot.mouseMoveAt(action, 100, 1000);
-                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                    robot.keyPress(keys.TAB,0);
-                                    robot.keyPress(keys.TAB,0,{shift:true});
-                                    robot.typeKeys("Esri",100,200);
-                                    //click default format
+                                    //choose default layout
                                     robot.sequence(function(){
-                                      action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[0];
+                                      action = query(".dijitReset.dijitMenuItem")[10];
                                       console.log(action);
                                       console.log(Date.now());
                                       robot.mouseMoveAt(action, 100, 1000);
                                       robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                      //choose default format
+                                      //change icon
+                                      action = query(".change-icon")[0];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      //click ok button
+                                      ok_btn = query(".jimu-popup-btn")[2];
+                                      console.log(ok_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(ok_btn, 100, 4000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      // iframes跳转至右侧
+                                      var BuilderQuery = query;
                                       robot.sequence(function(){
-                                        action = query(".dijitReset.dijitMenuItem")[4];
-                                        console.log(action);
-                                        console.log(Date.now());
-                                        robot.mouseMoveAt(action, 100, 1000);
-                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                        action = query(".dijitReset.dijitInputField.dijitArrowButtonInner")[1];
-                                        console.log(action);
-                                        console.log(Date.now());
-                                        robot.mouseMoveAt(action, 100, 1000);
-                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                        //choose default layout
-                                        robot.sequence(function(){
-                                          action = query(".dijitReset.dijitMenuItem")[10];
-                                          console.log(action);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //change icon
-                                          action = query(".change-icon")[0];
-                                          console.log(action);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //click ok button
-                                          ok_btn = query(".jimu-popup-btn")[2];
-                                          console.log(ok_btn);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(ok_btn, 100, 4000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          // iframes跳转至右侧
-                                          var BuilderQuery = query;
+                                        robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                          //doh check Print-btn delete state 2
+                                          var doh_Print_btn_delete_state_2 = BuilderQuery("[title=testB_Print]")[0].parentNode.id;
+                                          console.log("doh_Print_btn_delete_state_2: "+doh_Print_btn_delete_state_2);
+                                          //doh check icon Src 2
+                                          var doh_Print_icon_src_2 = BuilderQuery("[title=testB_Print]")[0].parentNode.firstChild.firstChild.src;
+                                          console.log("doh_Print_icon_src_2: "+doh_Print_icon_src_2);
+                                          // click Layer_List in header 
+                                          var more_btn = query("[title=more]")[0];  
+                                          var flag = undefined != more_btn ; 
+                                          console.log(more_btn);
+                                          console.log(flag);
+                                          console.log(Date.now()); 
+                                          if(flag){
+                                            robot.mouseMoveAt(more_btn, 10, 10);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                          }else{
+                                            var Print_btn = query(".icon-node")[0];
+                                            console.log(Print_btn);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(Print_btn, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                          }
+                                          // if there is a more btn
                                           robot.sequence(function(){
-                                            robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
-                                              //doh check icon Src 2
-                                              var doh_Print_icon_src_2 = BuilderQuery("[title=testB_Print]")[0].parentNode.firstChild.firstChild.src;
-                                              console.log("doh_Print_icon_src_2: "+doh_Print_icon_src_2);
-                                              // click Layer_List in header 
-                                              var more_btn = query("[title=more]")[0];  
-                                              var flag = undefined != more_btn ; 
-                                              console.log(more_btn);
-                                              console.log(flag);
-                                              console.log(Date.now()); 
-                                              if(flag){
-                                                robot.mouseMoveAt(more_btn, 10, 10);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                              }else{
-                                                var Print_btn = query(".icon-node")[0];
-                                                console.log(Print_btn);
+                                            if(flag){
+                                              var next_page = query(".points-inner")[0];
+                                              if(next_page != undefined && next_page.hasChildNodes()){
+                                                console.log(next_page);
                                                 console.log(Date.now());
-                                                robot.mouseMoveAt(Print_btn, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                                robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                                robot.mouseClick({left:true, middle:false, right:false}, 10);
                                               }
-                                              // if there is a more btn
-                                              robot.sequence(function(){
-                                                if(flag){
-                                                  var next_page = query(".points-inner")[0];
-                                                  if(next_page != undefined && next_page.hasChildNodes()){
-                                                    console.log(next_page);
-                                                    console.log(Date.now());
-                                                    robot.mouseMoveAt(next_page.lastChild, 10, 10);
-                                                    robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                                  }
-                                                  Print_btn = query("[title=testB_Print]")[0];
-                                                  console.log(Print_btn);
-                                                  console.log(Date.now());
-                                                  robot.mouseMoveAt(Print_btn, 100, 1000);
-                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                  robot.mouseMoveAt(Print_btn, 100, 3000, Number(150),Number(150));
-                                                }
-                                                //doh check default title
-                                                robot.sequence(function(){
-                                                  var doh_default_title = query(".dijitReset.dijitInputInner")[0].getAttribute("value") == "Print_test ArcGIS Web Map";
-                                                  console.log("doh_default_title:"+doh_default_title);
-                                                  var doh_default_layout = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[0].innerText == "A4 Landscape";
-                                                  console.log("doh_default_layout:"+doh_default_layout);
-                                                  var doh_default_format = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[1].innerText == "GIF";
-                                                  console.log("doh_default_format:"+doh_default_format);
-                                                  //click advanced setting
-                                                  action = query(".dijitReset.dijitInline.dijitButtonText")[0];
-                                                  console.log(action);
-                                                  console.log(Date.now());
-                                                  robot.mouseMoveAt(action, 100, 1000);
-                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                  //添加断言        
-                                                  robot.sequence(def.getTestCallback(function(){
-                                                    var doh_default_author = query(".dijitReset.dijitInputInner")[2].getAttribute("value") == "Esri_MYe";
-                                                    console.log("doh_default_author:"+doh_default_author);
-                                                    var doh_default_copyright = query(".dijitReset.dijitInputInner")[3].getAttribute("value") == "Esri";
-                                                    console.log("doh_default_copyright:"+doh_default_copyright);
-                                                    
-                                                    console.log('doh_testing:'); 
-                                                    doh.t(doh_default_copyright,"Default copyright has been chaned!");
-                                                    doh.t(doh_default_author,"Default author has been changed!");
-                                                    doh.t(doh_default_format,"Default format has been changed!");
-                                                    doh.t(doh_default_layout,"Default layout has been chagned!");
-                                                    doh.t(doh_default_title,"Default title has been changed!");
-                                                    doh.isNot(doh_Print_btn_delete_state_1,doh_Print_btn_delete_state_2,"Print widget has been deleted!");
-                                                    doh.isNot(doh_Print_icon_src_2,doh_Print_icon_src_1,"Print icon has been changed!");
-                                                  }), 3000);//添加断言
-                                                },2000);//doh check default title
-                                              },2000);// if there is a more btn
-                                            });
-                                          },2000);// iframes跳转至右侧
-                                        },2000);//choose default layout
-                                      },2000);//choose default format
-                                    },2000);//click default format
-                                  },2000);//edit Print
-                                },2000);//clear the warning
-                              },2000);//click edit button
-                            },2000);//move mouse to the new Print
+                                              Print_btn = query("[title=testB_Print]")[0];
+                                              console.log(Print_btn);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(Print_btn, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              robot.mouseMoveAt(Print_btn, 100, 3000, Number(150),Number(150));
+                                            }
+                                            //doh check default title
+                                            robot.sequence(function(){
+                                              var doh_default_title = query(".dijitReset.dijitInputInner")[0].getAttribute("value") == "Print_test ArcGIS Web Map";
+                                              console.log("doh_default_title:"+doh_default_title);
+                                              var doh_default_layout = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[0].innerText == "A4 Landscape";
+                                              console.log("doh_default_layout:"+doh_default_layout);
+                                              var doh_default_format = query(".dijitReset.dijitInline.dijitSelectLabel.dijitValidationTextBoxLabel")[1].innerText == "GIF";
+                                              console.log("doh_default_format:"+doh_default_format);
+                                              //click advanced setting
+                                              action = query(".dijitReset.dijitInline.dijitButtonText")[0];
+                                              console.log(action);
+                                              console.log(Date.now());
+                                              robot.mouseMoveAt(action, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //添加断言        
+                                              robot.sequence(def.getTestCallback(function(){
+                                                var doh_default_author = query(".dijitReset.dijitInputInner")[2].getAttribute("value") == "Esri_MYe";
+                                                console.log("doh_default_author:"+doh_default_author);
+                                                var doh_default_copyright = query(".dijitReset.dijitInputInner")[3].getAttribute("value") == "Esri";
+                                                console.log("doh_default_copyright:"+doh_default_copyright);
+                                                
+                                                console.log('doh_testing:'); 
+                                                doh.t(doh_default_copyright,"Default copyright has been chaned!");
+                                                doh.t(doh_default_author,"Default author has been changed!");
+                                                doh.t(doh_default_format,"Default format has been changed!");
+                                                doh.t(doh_default_layout,"Default layout has been chagned!");
+                                                doh.t(doh_default_title,"Default title has been changed!");
+                                                doh.isNot(doh_Print_btn_delete_state_1,doh_Print_btn_delete_state_2,"Print widget has been deleted!");
+                                                doh.isNot(doh_Print_icon_src_2,doh_Print_icon_src_1,"Print icon has been changed!");
+                                              }), 3000);//添加断言
+                                            },2000);//doh check default title
+                                          },2000);// if there is a more btn
+                                        });
+                                      },2000);// iframes跳转至右侧
+                                    },2000);//choose default layout
+                                  },2000);//choose default format
+                                },2000);//click default format
+                              },2000);//edit Print
+                            },2000);//clear the warning
                           },2000);// click Print
                         },2000);//choose Print
                       },2000);//add Print

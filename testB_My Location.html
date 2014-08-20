@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_My Location', {
           name: 'testB_My Location',
           timeout: 100000,
@@ -59,7 +59,7 @@
                     //record visibility doh
                     robot.sequence(function(){
                       My_Location_btn = query("[title=My Location]")[0];
-                      var doh_visibility = My_Location_btn.parentNode.className == "widget-node moveable hide";
+                      var doh_visibility = My_Location_btn.parentNode.className == "widget-node hide moveable";
                       console.log("testing: "+doh_visibility);
                       robot.mouseClick({left:true, middle:false, right:false}, 100);
                       // move back to My Location

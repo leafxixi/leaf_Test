@@ -14,7 +14,7 @@
   <script type="text/javascript">
     require(["doh", "dojo/dom", "dojo/robotx", "dojo/keys", "dojo/domReady!"], 
     function(doh, dom, robot, keys){
-      robot.initRobot('http://leaf:3344/webappbuilder/?id=9');
+      robot.initRobot('http://leaf:3344/webappbuilder/?id=2');
         doh.register('testB_LayerList', {
           name: 'testB_LayerList',
           timeout: 100000,
@@ -99,158 +99,135 @@
                             console.log(Date.now());
                             robot.mouseMoveAt(ok_btn, 100, 1000);
                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                            //move mouse to the new Layer List
-                            robot.sequence(function(){
-                              Layer_List = query("[title=Layer List]")[0];
-                              console.log(Layer_List);
+                            //doh check icon Src 1
+                            var doh_Layer_List_icon_src_1 = Layer_List.parentNode.firstChild.firstChild.src;
+                            console.log("doh_testing: "+doh_Layer_List_icon_src_1);
+                            //edit Layer List
+                            robot.sequence(function(){  
+                              //change Layer List name
+                              var action = query(".jimu-input")[0];
+                              console.log(action);
                               console.log(Date.now());
-                              robot.mouseMoveAt(Layer_List, 100, 1000, Number(37), Number(-50));
-                              //doh check Layer List-btn delete state 2
-                              var doh_Layer_List_btn_delete_state_2 = Layer_List.parentNode.id;
-                              console.log("doh_testing: "+doh_Layer_List_btn_delete_state_2);
-                              //doh check icon Src 1
-                              var doh_Layer_List_icon_src_1 = Layer_List.parentNode.firstChild.firstChild.src;
-                              console.log("doh_testing: "+doh_Layer_List_icon_src_1);
-                              //click edit button
-                              robot.sequence(function(){                              
-                                var edit_btn = query(".edit-btn")[0];
-                                console.log(edit_btn);
-                                console.log(Date.now());
-                                robot.mouseMoveAt(edit_btn, 100, 1000);
-                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                //edit Layer List
-                                robot.sequence(function(){  
-                                  //change Layer List name
-                                  var action = query(".jimu-input")[0];
-                                  console.log(action);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(action, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  robot.keyPress(keys.TAB,0);
-                                  robot.keyPress(keys.TAB,0,{shift:true});
-                                  robot.typeKeys("testB_Layer_List",100,200);
-                                  ok_btn = query(".jimu-popup-btn")[2];
-                                  console.log(ok_btn);
-                                  console.log(Date.now());
-                                  robot.mouseMoveAt(ok_btn, 100, 1000);
-                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                  // iframes跳转至右侧
-                                  var BuilderQuery = query;
+                              robot.mouseMoveAt(action, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              robot.keyPress(keys.TAB,0);
+                              robot.keyPress(keys.TAB,0,{shift:true});
+                              robot.typeKeys("testB_Layer_List",100,200);
+                              ok_btn = query(".jimu-popup-btn")[2];
+                              console.log(ok_btn);
+                              console.log(Date.now());
+                              robot.mouseMoveAt(ok_btn, 100, 1000);
+                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                              // iframes跳转至右侧
+                              var BuilderQuery = query;
+                              robot.sequence(function(){
+                                robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
+                                  // click Layer_List in header 
+                                  var more_btn = query("[title=more]")[0];  
+                                  var flag = undefined != more_btn ; 
+                                  console.log(more_btn);
+                                  console.log(flag);
+                                  console.log(Date.now()); 
+                                  if(flag){
+                                    robot.mouseMoveAt(more_btn, 10, 10);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 10);
+                                  }else{
+                                    Layer_List_btn = query(".icon-node")[0];
+                                    console.log(Layer_List_btn);
+                                    console.log(Date.now());
+                                    robot.mouseMoveAt(Layer_List_btn, 100, 1000);
+                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                  }
+                                  // if there is a more btn
                                   robot.sequence(function(){
-                                    robot.window.frames['previewFrame'].require(["dojo/query"], function(query){
-                                      // click Layer_List in header 
-                                      var more_btn = query("[title=more]")[0];  
-                                      var flag = undefined != more_btn ; 
-                                      console.log(more_btn);
-                                      console.log(flag);
-                                      console.log(Date.now()); 
-                                      if(flag){
-                                        robot.mouseMoveAt(more_btn, 10, 10);
-                                        robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                      }else{
-                                        Layer_List_btn = query(".icon-node")[0];
-                                        console.log(Layer_List_btn);
+                                    if(flag){
+                                      var next_page = query(".points-inner")[0];
+                                      if(next_page != undefined && next_page.hasChildNodes()){
+                                        console.log(next_page);
                                         console.log(Date.now());
-                                        robot.mouseMoveAt(Layer_List_btn, 100, 1000);
-                                        robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                        robot.mouseMoveAt(next_page.lastChild, 10, 10);
+                                        robot.mouseClick({left:true, middle:false, right:false}, 10);
                                       }
-                                      // if there is a more btn
+                                      Layer_List_btn = query("[title=testB_Layer_List]")[0];
+                                      console.log(Layer_List_btn);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(Layer_List_btn, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      robot.mouseMoveAt(Layer_List_btn, 100, 3000, Number(150),Number(150));
+                                    }
+                                    //to check its lengnd
+                                    robot.sequence(function(){
+                                      action = query(".showLegend-div")[1];
+                                      console.log(action);
+                                      console.log(Date.now());
+                                      robot.mouseMoveAt(action, 100, 1000);
+                                      robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                      //doh check select show legend
                                       robot.sequence(function(){
-                                        if(flag){
-                                          var next_page = query(".points-inner")[0];
-                                          if(next_page != undefined && next_page.hasChildNodes()){
-                                            console.log(next_page);
-                                            console.log(Date.now());
-                                            robot.mouseMoveAt(next_page.lastChild, 10, 10);
-                                            robot.mouseClick({left:true, middle:false, right:false}, 10);
-                                          }
-                                          Layer_List_btn = query("[title=testB_Layer_List]")[0];
-                                          console.log(Layer_List_btn);
-                                          console.log(Date.now());
-                                          robot.mouseMoveAt(Layer_List_btn, 100, 1000);
-                                          robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          robot.mouseMoveAt(Layer_List_btn, 100, 3000, Number(150),Number(150));
-                                        }
-                                        //to check its lengnd
+                                        var doh_select_show_legend = query(".legend-label")[0] != undefined;
+                                        console.log("doh_select_show_legend:"+doh_select_show_legend);
+                                        action = BuilderQuery("[title=testB_Layer_List]")[0];
+                                        console.log(action);
+                                        console.log(Date.now());
+                                        robot.mouseMoveAt(action, 100, 1000, Number(37), Number(-50));
+                                        //to disselect show legend
                                         robot.sequence(function(){
-                                          action = query(".showLegend-div")[1];
-                                          console.log(action);
+                                          edit_btn = BuilderQuery(".edit-btn")[0];
+                                          console.log(edit_btn);
                                           console.log(Date.now());
-                                          robot.mouseMoveAt(action, 100, 1000);
+                                          robot.mouseMoveAt(edit_btn, 100, 1000);
                                           robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                          //to check its lengnd 2
+                                          // disselect show legend
                                           robot.sequence(function(){
-                                            action = query(".showLegend-div")[2];
+                                            action = BuilderQuery(".dijitReset.dijitCheckBoxInput")[0];
                                             console.log(action);
                                             console.log(Date.now());
                                             robot.mouseMoveAt(action, 100, 1000);
                                             robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                            //doh check select show legend
+                                            action = BuilderQuery(".change-icon")[0];
+                                            console.log(action);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(action, 100, 1000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            ok_btn = BuilderQuery(".jimu-popup-btn")[2];
+                                            console.log(ok_btn);
+                                            console.log(Date.now());
+                                            robot.mouseMoveAt(ok_btn, 100, 3000);
+                                            robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                            //doh check disselect show legend
                                             robot.sequence(function(){
-                                              var doh_select_show_legend = query(".legend-label")[0] != undefined;
-                                              console.log("doh_select_show_legend:"+doh_select_show_legend);
-                                              action = BuilderQuery("[title=testB_Layer_List]")[0];
+                                              action = query(".showLegend-div")[1];
                                               console.log(action);
                                               console.log(Date.now());
-                                              robot.mouseMoveAt(action, 100, 1000, Number(37), Number(-50));
-                                              //to disselect show legend
-                                              robot.sequence(function(){
-                                                edit_btn = BuilderQuery(".edit-btn")[0];
-                                                console.log(edit_btn);
-                                                console.log(Date.now());
-                                                robot.mouseMoveAt(edit_btn, 100, 1000);
-                                                robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                // disselect show legend
-                                                robot.sequence(function(){
-                                                  action = BuilderQuery(".dijitReset.dijitCheckBoxInput")[0];
-                                                  console.log(action);
-                                                  console.log(Date.now());
-                                                  robot.mouseMoveAt(action, 100, 1000);
-                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                  action = BuilderQuery(".change-icon")[0];
-                                                  console.log(action);
-                                                  console.log(Date.now());
-                                                  robot.mouseMoveAt(action, 100, 1000);
-                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                  ok_btn = BuilderQuery(".jimu-popup-btn")[2];
-                                                  console.log(ok_btn);
-                                                  console.log(Date.now());
-                                                  robot.mouseMoveAt(ok_btn, 100, 3000);
-                                                  robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                  //doh check disselect show legend
-                                                  robot.sequence(function(){
-                                                    action = query(".showLegend-div")[1];
-                                                    console.log(action);
-                                                    console.log(Date.now());
-                                                    robot.mouseMoveAt(action, 100, 1000);
-                                                    robot.mouseClick({left:true, middle:false, right:false}, 100);
-                                                    //添加断言        
-                                                    robot.sequence(def.getTestCallback(function(){
-                                                      var doh_disselect_show_legend = query(".showLegend-image")[2].getAttribute("style")=="display: none;";
-                                                      console.log("doh_disselect_show_legend:"+doh_disselect_show_legend);   
-                                                      var doh_Layer_List_icon_src_2 = BuilderQuery("[title=testB_Layer_List")[0].parentNode.firstChild.firstChild.getAttribute("src");
-                                                      console.log("doh_Layer_List_icon_src_2:"+doh_Layer_List_icon_src_2); 
-                                                      var doh_Layer_List_Name = BuilderQuery("[title=testB_Layer_List")[0].innerText == "testB_Layer_List";
-                                                      console.log("doh_Layer_List_Name:"+doh_Layer_List_Name); 
-                                                      doh.t(doh_Layer_List_Name,"Layer List name has been changed!");
-                                                      doh.t(doh_disselect_show_legend,"disselect show legend worked!");
-                                                      doh.t(doh_select_show_legend,"select show legend worked!");
-                                                      doh.isNot(doh_Layer_List_icon_src_1,doh_Layer_List_icon_src_2,"Layer List icon has been changed!");
-                                                      doh.isNot(doh_Layer_List_btn_delete_state_1,doh_Layer_List_btn_delete_state_2,"Layer List widget has been deleted!");
+                                              robot.mouseMoveAt(action, 100, 1000);
+                                              robot.mouseClick({left:true, middle:false, right:false}, 100);
+                                              //添加断言        
+                                              robot.sequence(def.getTestCallback(function(){
+                                                //doh check Layer List-btn delete state 2
+                                                var doh_Layer_List_btn_delete_state_2 = BuilderQuery("[title=testB_Layer_List")[0].parentNode.id;
+                                                console.log("doh_testing: "+doh_Layer_List_btn_delete_state_2);
+                                                var doh_disselect_show_legend = query(".showLegend-image")[1].getAttribute("style")=="display: none;";
+                                                console.log("doh_disselect_show_legend:"+doh_disselect_show_legend);   
+                                                var doh_Layer_List_icon_src_2 = BuilderQuery("[title=testB_Layer_List")[0].parentNode.firstChild.firstChild.getAttribute("src");
+                                                console.log("doh_Layer_List_icon_src_2:"+doh_Layer_List_icon_src_2); 
+                                                var doh_Layer_List_Name = BuilderQuery("[title=testB_Layer_List")[0].innerText == "testB_Layer_List";
+                                                console.log("doh_Layer_List_Name:"+doh_Layer_List_Name); 
+                                                doh.t(doh_Layer_List_Name,"Layer List name has been changed!");
+                                                doh.t(doh_disselect_show_legend,"disselect show legend worked!");
+                                                doh.t(doh_select_show_legend,"select show legend worked!");
+                                                doh.isNot(doh_Layer_List_icon_src_1,doh_Layer_List_icon_src_2,"Layer List icon has been changed!");
+                                                doh.isNot(doh_Layer_List_btn_delete_state_1,doh_Layer_List_btn_delete_state_2,"Layer List widget has been deleted!");
 
-                                                    }), 3000);//添加断言 
-                                                  },2000);//doh check disselect show legend
-                                                },2000);// disselect show legend
-                                              },2000);//to disselect show legend
-                                            },2000);//doh check select show legend
-                                          },2000);//to check its lengnd 2
-                                        },2000);//to check its lengnd
-                                      },2000);// if there is a more btn
-                                    });
-                                  },2000);// iframes跳转至右侧
-                                },2000);//edit Layer List
-                              },2000);//click edit button
-                            },2000);//move mouse to the new Layer List
+                                              }), 3000);//添加断言 
+                                            },2000);//doh check disselect show legend
+                                          },2000);// disselect show legend
+                                        },2000);//to disselect show legend
+                                      },2000);//doh check select show legend
+                                    },2000);//to check its lengnd
+                                  },2000);// if there is a more btn
+                                });
+                              },2000);// iframes跳转至右侧
+                            },2000);//edit Layer List
                           },2000);// click Layer List
                         },2000);//choose Layer List
                       },2000);//add Layer List
